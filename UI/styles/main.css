@@ -147,6 +147,57 @@ hr {
   margin: 5% auto 0;
 }
 
+/* Entries */
+
+.entryList {
+  width: 65%;
+  margin: 2rem 2rem 2rem 14rem;
+}
+
+.entry {
+  padding: 1%;
+  padding-bottom: 5%;
+}
+
+.entry a {
+  text-decoration: none;
+  color: black;
+}
+
+.entry a .title {
+  padding-bottom: 1%;
+}
+
+.entry p {
+  color: #2F2F36;
+}
+
+.entry .date {
+  color: grey;
+  padding-bottom: .5%;
+  font-size: .8rem;
+}
+
+.entry .actions {
+  padding: 1% 1% 1% 0;
+}
+
+.entry .actions a {
+  color: grey;
+}
+
+.entry .actions a:nth-of-type(1) {
+  padding-right: 2%;
+}
+
+.entry .actions a:nth-of-type(1):hover {
+  color: #3FC2B9;
+}
+
+.entry .actions a:nth-of-type(2):hover {
+  color: red;
+}
+
 /* Clear fix */
 
 .clearfix:before,

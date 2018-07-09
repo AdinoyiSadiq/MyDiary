@@ -14,7 +14,7 @@ body {
 }
 
 /* Common */
-#welcomeContent {
+#welcomeContent, #authContent {
   width: 450px;
   background: white;
   border-radius: .5em;
@@ -74,6 +74,71 @@ button:focus {
 #welcomeContent button:nth-of-type(2) {
   float: right;
   margin-right: 2.5%;
+}
+
+/* Auth screens */
+
+#authContent .title {
+  font-weight: 900;
+}
+
+#authContent form {
+  margin-top: 10%; 
+}
+
+#authContent input {
+  display: block;
+  width: 90%;
+  margin: 1rem auto;
+  padding: 1rem 2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+#authContent button {
+  background: #ffc600;
+  width: 90%;
+  margin: .5rem auto;
+  margin-bottom: 2rem;
+  padding: .5rem;
+  border-bottom: 5px solid #F3C010;
+}
+
+#authContent main > div {
+  padding: 1.5rem;
+  font-size: 1rem;
+}
+
+.authAlt {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: .8rem;
+}
+
+.authAlt a {
+  color: black;
+  font-weight: 500;
+}
+
+.authAlt a:hover {
+  color: black;
+  text-shadow: 1px 0 0 currentColor;
+}
+
+hr {
+  width: 50%;
+  margin: 0 auto;
+  border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+/* Signin */
+
+.signin, .signout {
+  margin: 10% auto 0;
 }
 
 /* Clear fix */

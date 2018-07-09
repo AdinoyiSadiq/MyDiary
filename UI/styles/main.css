@@ -141,6 +141,12 @@ hr {
   margin: 10% auto 0;
 }
 
+/* Signup */
+
+.signup {
+  margin: 5% auto 0;
+}
+
 /* Clear fix */
 
 .clearfix:before,

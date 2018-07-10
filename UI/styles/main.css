@@ -449,6 +449,12 @@ hr {
   background-color: #F3C010;
 }
 
+/* Sign Out */
+
+.signout {
+  margin-top: 10rem;
+}
+
 /* Clear fix */
 
 .clearfix:before,

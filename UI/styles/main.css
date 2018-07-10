@@ -261,6 +261,20 @@ hr {
   color: red;
 }
 
+
+/* Entry */
+
+#entryContent .entry {
+  width: 65%;
+  margin: 2rem 2rem 2rem 14rem;
+}
+
+#entryContent .entry .content {
+  padding-top: 1.5rem;
+}
+
+
+
 /* Clear fix */
 
 .clearfix:before,

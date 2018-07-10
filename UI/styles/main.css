@@ -368,6 +368,86 @@ hr {
   font-size: .8rem;
 }
 
+/* Profile */
+#profileContent section {
+  width: 65%;
+  margin: 2rem 2rem 2rem 14rem;
+}
+
+#profileContent section div {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+#profileContent section .userName {
+  font-size: 1.5rem;
+}
+
+#profileContent section a {
+  text-decoration: none;
+  color: black;
+}
+
+#profileContent section a:hover {
+  color: #3FC2B9;
+}
+
+#profileContent .setTime {
+  margin: 5% auto 0;
+  width: 50%;
+  background: white;
+  border-radius: .5em;
+  text-align: center;
+  box-shadow:0 0 5px 5px rgba(0,0,0,0.1);
+}
+
+#profileContent .setTime .timeText {
+  padding-top: 1.2rem;
+  margin-left: 2.5rem;
+}
+
+#profileContent .setTime .timeText #am, #pm {
+  font-size: .5rem;
+}
+
+#profileContent .minuteClock {
+  display: none;
+}
+
+#profileContent .hourClock circle, .minuteClock circle {
+  stroke: green;
+  stroke-width: 4;
+  fill: white;
+}
+
+#profileContent .hourClock text {
+  font-size: .8rem;
+  cursor: pointer;
+
+}
+
+#profileContent .minuteClock text {
+  font-size: .6rem;
+  cursor: pointer;
+}
+
+#profileContent #hourHand, #minuteHand {
+  stroke: black;
+  stroke-linecap: round;
+  stroke-width: 3px;
+}
+
+#profileContent .setTime button {
+  background: #ffc600;
+  width: 30%;
+  margin-bottom: .5rem;
+  border-bottom: 2px solid #F3C010;
+}
+
+#profileContent .setTime button:active {
+  background-color: #F3C010;
+}
 
 /* Clear fix */
 

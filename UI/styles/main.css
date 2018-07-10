@@ -455,6 +455,233 @@ hr {
   margin-top: 10rem;
 }
 
+@media only screen and (min-width: 600px) and (max-width: 920px) {
+  #mainNav .logo {
+    padding: 1.9rem 0rem .5rem .5rem;
+    font-size: 1rem;
+  }
+
+  #mainNav i {
+    padding-bottom: 1rem;
+
+  }
+
+  .entryList {
+    width: 80%;
+    margin: 2rem 2rem 2rem 6rem;
+  }
+
+  /* Entry */
+
+  #entryContent .entry {
+    width: 80%;
+    margin: 2rem 2rem 2rem 5rem;
+  }
+
+  /* Add an Entry */
+
+  #addEntryContent form {
+    width: 65%;
+    margin: 2rem 2rem 2rem 5rem;
+  }
+
+  #addEntryContent .heading {
+    padding-left: 1rem;
+  }
+
+  #addEntryContent input, textarea {
+    width: 100%;
+    display: block;
+    padding: 1rem 2rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem
+  }
+
+  #addEntryContent input {
+    margin-bottom: 2rem;
+  }
+
+  #addEntryContent textarea {
+    margin-bottom: 2rem;
+  }
+
+  #addEntryContent button {
+    background:#ffc600;
+      width: 20%;
+      margin-top: 2%;
+      margin-bottom: 2%;
+      border-bottom: 5px solid #F3C010;
+      font-size: 1rem;
+  }
+
+  #addEntryContent button:nth-of-type(1) {
+    margin-right: 2rem;
+  }
+
+  /* Notifications */
+
+  .notificationList {
+    width: 80%;
+    margin: 2rem 2rem 2rem 5rem;
+  }
+
+  .notificationList .heading {
+    padding-right: 6rem;
+  }
+
+  /* Profile */
+  #profileContent section {
+    width: 65%;
+    margin: 2rem 2rem 2rem 7rem;
+  }
+
+  #profileContent .setTime {
+    width: 270px;
+  }
+
+  .signout {
+    margin-top: 10rem;
+  }
+
+}
+
+@media only screen and (max-width: 599px) {
+
+  /* Min Nav */
+  #mainNav .logo {
+    padding: 1.9rem 0rem .5rem 1.1rem;
+    font-size: 1rem;
+  }
+
+  #mainNav i {
+    font-size: 1rem;
+    padding-top: .2rem;
+    padding-bottom: 1rem;
+
+  }
+
+  #mainNav li:nth-of-type(2) {
+    display: none;
+  }
+
+  /* Auth */
+
+  #welcomeContent, #authContent {
+    width: 306px;
+  }
+
+  /* Entries */
+
+  .entryList {
+    width: 90%;
+    margin: 1rem;
+  }
+
+  .entry a .title {
+    font-size: 1rem;
+  }
+
+  .entry p {
+    font-size: .8rem;
+  }
+
+  .entry .date {
+    font-size: .6rem;
+  }
+
+  .entry .actions a:nth-of-type(1) {
+    margin-right: 1.4rem;
+  }
+
+  /* Entry */
+
+  #entryContent .entry {
+    width: 90%;
+    margin: 1rem;
+  }
+
+  .entry .title {
+    font-size: 1rem;
+  }
+
+  .entry .content {
+    margin-bottom: 1.2rem;
+  }
+
+  /* Add an Entry */
+
+  #addEntryContent form {
+    width: 77%;
+    margin: 1rem;
+  }
+
+  #addEntryContent .heading {
+    text-align: center;
+    padding-left: 2.5rem;
+    margin: 1rem 0 1rem;
+  }
+
+  #addEntryContent input {
+    margin-bottom: 1rem;
+  }
+
+  #addEntryContent textarea {
+    margin-bottom: 1rem;
+  }
+
+  /* Notifications */
+
+  .notificationList {
+    width: 90%;
+    margin: 1rem;
+  }
+
+  .notificationList .heading {
+    margin: 1rem 0 1rem;
+    font-size: 1rem;
+  }
+
+  .notification .date {
+    font-size: .6rem;
+  }
+
+  .notification p:nth-of-type(2) {
+    font-size: .8rem;
+  }
+
+  /* Profile */
+
+  #profileContent .heading {
+    margin: 1rem 0 1rem;
+    font-size: 1rem;
+  }
+
+  #profileContent section .userName {
+    font-size: 1.2rem;
+  }
+
+  #profileContent section .entriesNumber, #profileContent section .addReminder > a, .signOut {
+    font-size: .8rem;
+  }
+
+  #profileContent section {
+    width: 80%;
+    margin: 1rem;
+    margin-left: 2rem;
+  }
+
+  #profileContent .setTime {
+    width: 240px;
+  }
+
+  /* Sign Out */
+
+  .signout {
+    margin-top: 10rem;
+  }
+}
+
 /* Clear fix */
 
 .clearfix:before,

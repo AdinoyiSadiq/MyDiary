@@ -336,6 +336,39 @@ hr {
 }
 
 
+/* Notifications */
+.notificationList {
+  width: 65%;
+  margin: 2rem 2rem 2rem 14rem;
+}
+
+.notificationList .heading {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
+.notification {
+  padding: 1%;
+  padding-bottom: 5%;
+}
+
+.notification a {
+  text-decoration: none;
+  color: black;
+}
+.notification p {
+  color: #2F2F36;
+}
+
+.notification .date {
+  color: grey;
+  padding-bottom: .5%;
+  font-size: .8rem;
+}
+
+
 /* Clear fix */
 
 .clearfix:before,

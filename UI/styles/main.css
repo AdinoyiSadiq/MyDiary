@@ -147,6 +147,69 @@ hr {
   margin: 5% auto 0;
 }
 
+/* Main Navigation */
+
+#mainNav {
+  background: #E5E5E5;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  border-bottom: .5px solid #C2C2C2;
+}
+
+#mainNav li {
+  list-style: none;
+  float: right;
+  padding-top: 2rem;
+}
+
+#mainNav .logo {
+  float: left;
+  padding: .5rem 2.5rem;
+  padding-right: 1rem;
+  font-size: 2rem;
+}
+
+.logo a {
+  font-family: 'Pacifico', cursive;
+  text-decoration: none;
+  color: #ffc600;
+}
+
+#mainNav li:nth-of-type(2) {
+  float: left;
+}
+
+#mainNav li:nth-of-type(3) {
+  padding-right: 5%;
+}
+
+#mainNav li a:not(.logoLink) {
+  display: block;
+  line-height: 2rem;
+  padding: 0 1rem;
+  color: black;
+  text-decoration: none;
+}
+
+#mainNav li a:not(.logoLink):hover {
+  color: #3FC2B9;
+}
+
+#mainNav .current, #mainNav a:hover.current {
+  color: #3FC2B9 !important;
+  cursor: default;
+}
+
+#mainNav i {
+  font-size: 1.5rem;
+  padding-top: .2rem; 
+}
+
+#addEntryContent main, #entriesContent main, #entryContent main, #notificationsContent main, #profileContent main {
+  padding-top: 70px;
+}
+
 /* Entries */
 
 .entryList {

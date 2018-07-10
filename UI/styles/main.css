@@ -274,6 +274,67 @@ hr {
 }
 
 
+/* Add Entry */
+
+#addEntryContent form {
+  width: 65%;
+  margin: 2rem 2rem 2rem 14rem;
+}
+
+#addEntryContent .heading {
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+#addEntryContent input, textarea {
+  width: 100%;
+  display: block;
+  padding: 1rem 2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem
+}
+
+#addEntryContent input {
+  margin-bottom: 2rem;
+}
+
+#addEntryContent textarea {
+  margin-bottom: 2rem;
+}
+
+#addEntryContent button {
+  background:#ffc600;
+    width: 20%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-bottom: 5px solid #F3C010;
+    font-size: 1rem;
+}
+
+#addEntryContent button:nth-of-type(1) {
+  margin-right: 2rem;
+}
+
+#addEntryContent button:nth-of-type(1):hover {
+  color: green;
+}
+
+#addEntryContent button:nth-of-type(2):hover {
+  color: red;
+}
+
+#addEntryContent button:nth-of-type(1):active {
+  background-color: #F3C010;
+  color: green;
+}
+
+#addEntryContent button:nth-of-type(2):active {
+  background-color: #F3C010;
+  color: red;
+}
+
 
 /* Clear fix */
 

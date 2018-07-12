@@ -19,6 +19,9 @@ git checkout gh-pages
 # Open the index.html page in the UI directory
 ```
 
+## UI Template
+https://adinoyisadiq.github.io/MyDiary/UI/
+
 ## Features
 + Users can create an account and log in.
 + Users can view all entries to their diary.

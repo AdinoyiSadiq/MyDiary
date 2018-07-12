@@ -20,7 +20,7 @@ git checkout gh-pages
 ```
 
 ## UI Template
-https://adinoyisadiq.github.io/MyDiary/UI/
+https://adinoyisadiq.github.io/MyDiary/UI/index.html
 
 ## Features
 + Users can create an account and log in.

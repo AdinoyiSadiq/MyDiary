@@ -131,7 +131,7 @@ button:focus {
 
 .authAlt a:hover {
   color: black;
-  text-shadow: 1px 0 0 currentColor;
+  text-shadow: 1px 0 0;
 }
 
 hr {
@@ -142,16 +142,16 @@ hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-/* Signin */
-
-.signin, .signout {
-  margin: 10% auto 0;
-}
-
 /* Signup */
 
 .signup {
   margin: 5% auto 0;
+}
+
+/* Signin */
+
+.signin, .signout {
+  margin: 10% auto 0;
 }
 
 /* Main Navigation */
@@ -267,7 +267,6 @@ hr {
 .entry .actions a:nth-of-type(2):hover {
   color: red;
 }
-
 
 /* Entry */
 
@@ -396,6 +395,19 @@ hr {
   color: black;
 }
 
+#profileContent .addReminder {
+  cursor: pointer;
+}
+
+
+#profileContent .active {
+  color: #3FC2B9;
+}
+
+.addReminder > a:hover {
+  color: #3FC2B9;
+}
+
 #profileContent section a:hover {
   color: #3FC2B9;
 }
@@ -414,6 +426,18 @@ hr {
   margin-left: 2.5rem;
 }
 
+#profileContent .timeText {
+  cursor: default;
+}
+
+#profileContent #hr, #min, #am, #pm {
+  cursor: pointer;
+}
+
+#hr {
+  color: #3FC2B9;
+}
+
 #profileContent .setTime .timeText #am, #pm {
   font-size: .5rem;
 }
@@ -428,15 +452,10 @@ hr {
   fill: white;
 }
 
-#profileContent .hourClock text {
-  font-size: .8rem;
-  cursor: pointer;
-
-}
-
-#profileContent .minuteClock text {
+#profileContent .hourClock text, .minuteClock text  {
   font-size: .6rem;
   cursor: pointer;
+
 }
 
 #profileContent #hourHand, #minuteHand {

@@ -8,6 +8,7 @@ router.get('/entries', entriesController.getAllEntries);
 router.get('/entries/:id', entriesController.getEntry);
 router.post('/entries', validate.entryPost, entriesController.createEntry);
 router.put('/entries/:id', validate.entryUpdate, entriesController.editEntry);
+router.delete('/entries/:id', entriesController.deleteEntry);
 
 router.all('*', (req, res) => {
   res.status(404).json({

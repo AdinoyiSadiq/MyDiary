@@ -15,4 +15,18 @@ export default {
 
     next();
   },
+  entryUpdate(req, res, next) {
+    const { title, content } = req.body;
+    const len = Object.keys(req.body).length;
+    const missing = checkFields({ title, content });
+
+    if (missing) {
+      return res.status(400).send({ error: 'Missng field/s' });
+    }
+    if (len > 2) {
+      return res.status(400).send({ error: 'Too many fields' });
+    }
+
+    next();
+  },
 };

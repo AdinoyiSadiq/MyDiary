@@ -1,6 +1,6 @@
 import Entry, { db } from '../models/entry';
 
-const entries = db;
+let entries = db;
 
 export default {
   getAllEntries(req, res, next) {
@@ -24,7 +24,7 @@ export default {
           message: 'Diary Entry Retrieved Successfully',
         });
       } else {
-        res.status(404).send({ error: 'Entry not found' });
+        res.status(404).send({ message: 'Entry not found' });
       }
     } catch (error) {
       next(error);
@@ -66,7 +66,25 @@ export default {
           message: 'Edited Diary Entry Successfully',
         });
       } else {
-        res.status(404).send({ error: 'Entry not found' });
+        res.status(404).send({ message: 'Entry not found' });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+  deleteEntry(req, res, next) {
+    try {
+      const entryID = parseInt(req.params.id, 10);
+      const exists = entries.find(entry => entry.id === entryID);
+
+      if (exists) {
+        const newEntries = entries.filter(entry => entry.id !== entryID);
+        entries = newEntries;
+        res.send({
+          message: 'Deleted Diary Entry Successfully',
+        });
+      } else {
+        res.status(404).send({ message: 'Entry not found' });
       }
     } catch (error) {
       next(error);

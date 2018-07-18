@@ -43,4 +43,33 @@ export default {
       next(error);
     }
   },
+  editEntry(req, res, next) {
+    try {
+      const entryID = parseInt(req.params.id, 10);
+      const { title, content } = req.body;
+
+      const exists = entries.find(entry => entry.id === entryID);
+
+      if (exists) {
+        let entryIndex;
+        entries.forEach((entry, index) => {
+          if (entry.id === entryID) {
+            entryIndex = index;
+            entries[index].title = title;
+            entries[index].content = content;
+            entries[index].updatedAt = Date.now();
+          }
+        });
+
+        res.send({
+          entry: entries[entryIndex],
+          message: 'Edited Diary Entry Successfully',
+        });
+      } else {
+        res.status(404).send({ error: 'Entry not found' });
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
 };

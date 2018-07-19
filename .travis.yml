@@ -12,3 +12,5 @@ install:
   - npm install
 script: 
   - nyc --reporter=lcov npm run test
+after_success:
+  - npm run coverage

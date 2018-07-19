@@ -36,10 +36,10 @@ npm run test
 | Endpoint                                         | Functionality                      |
 | ------------------------------------------------ | ---------------------------------- |
 | GET /entries                                     | Fetch all entries                  |
-| GET /entries/<entryId>                           | Fetch a single entry               |
+| GET /entries/:entryId                            | Fetch a single entry               |
 | POST /entries                                    | Create an entry                    |
-| PUT /entries                                     | Modify and entry                   |
-| DELETE /entries/<entryId>                        | Delete and entry                   |
+| PUT /entries/:entryId                            | Modify and entry                   |
+| DELETE /entries/:entryId                         | Delete and entry                   |
 
 ## MyDiary App UI Template
 The gh-pages branch contains the template UI for the MyDiary app

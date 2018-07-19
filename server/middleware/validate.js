@@ -7,10 +7,10 @@ export default {
     const missing = checkFields({ authorID, title, content });
 
     if (missing) {
-      return res.status(400).send({ error: 'Missng field/s' });
+      return res.status(400).send({ message: 'Missng field/s' });
     }
     if (len > 3) {
-      return res.status(400).send({ error: 'Too many fields' });
+      return res.status(400).send({ message: 'Too many fields' });
     }
 
     next();
@@ -21,10 +21,10 @@ export default {
     const missing = checkFields({ title, content });
 
     if (missing) {
-      return res.status(400).send({ error: 'Missng field/s' });
+      return res.status(400).send({ message: 'Missng field/s' });
     }
     if (len > 2) {
-      return res.status(400).send({ error: 'Too many fields' });
+      return res.status(400).send({ message: 'Too many fields' });
     }
 
     next();

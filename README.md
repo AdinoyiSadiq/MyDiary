@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/AdinoyiSadiq/MyDiary.svg?branch=ch-ci-setup-159163741)](https://travis-ci.org/AdinoyiSadiq/MyDiary)
+
 # MyDiary
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.

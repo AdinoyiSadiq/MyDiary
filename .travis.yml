@@ -10,7 +10,7 @@ cache:
     - node_modules
 branches:
   only:
-    - ch-ci-setup-159163741
+    - server
 install:
   - npm install
 before_script:

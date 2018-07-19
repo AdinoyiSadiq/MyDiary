@@ -6,6 +6,41 @@
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.
 
+## Documentation
+Find the API documentation here: [MyDiary API Documentation](https://mydiary2.docs.apiary.io/)
+
+## API Setup
+
+```
+# Clone this repository
+git clone https://github.com/AdinoyiSadiq/MyDiary.git
+
+# Switch into the directory of the project
+cd MyDiary
+
+# Switch to the server branch
+git checkout server
+
+# Install dependencies
+npm install
+
+# Start application 
+npm run dev
+
+# Run api tests
+npm run test
+```
+
+## API Endpoints
+
+| Endpoint                                         | Functionality                      |
+| ------------------------------------------------ | ---------------------------------- |
+| GET /entries                                     | Fetch all entries                  |
+| GET /entries/<entryId>                           | Fetch a single entry               |
+| POST /entries                                    | Create an entry                    |
+| PUT /entries                                     | Modify and entry                   |
+| DELETE /entries/<entryId>                        | Delete and entry                   |
+
 ## MyDiary App UI Template
 The gh-pages branch contains the template UI for the MyDiary app
 

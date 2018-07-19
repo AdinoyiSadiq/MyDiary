@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/AdinoyiSadiq/MyDiary.svg?branch=ch-ci-setup-159163741)](https://travis-ci.org/AdinoyiSadiq/MyDiary)
-
+[![Coverage Status](https://coveralls.io/repos/github/AdinoyiSadiq/MyDiary/badge.svg?branch=ch-ci-setup-159163741)](https://coveralls.io/github/AdinoyiSadiq/MyDiary?branch=ch-ci-setup-159163741)
 # MyDiary
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.

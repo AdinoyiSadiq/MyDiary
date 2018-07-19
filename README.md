@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/AdinoyiSadiq/MyDiary.svg?branch=ch-ci-setup-159163741)](https://travis-ci.org/AdinoyiSadiq/MyDiary)
 [![Coverage Status](https://coveralls.io/repos/github/AdinoyiSadiq/MyDiary/badge.svg?branch=ch-ci-setup-159163741)](https://coveralls.io/github/AdinoyiSadiq/MyDiary?branch=ch-ci-setup-159163741)
+[![Maintainability](https://api.codeclimate.com/v1/badges/047ca4029459a4e72c0b/maintainability)](https://codeclimate.com/github/AdinoyiSadiq/MyDiary/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/047ca4029459a4e72c0b/test_coverage)](https://codeclimate.com/github/AdinoyiSadiq/MyDiary/test_coverage)
 # MyDiary
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.

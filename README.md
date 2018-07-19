@@ -38,8 +38,8 @@ npm run test
 | GET /entries                                     | Fetch all entries                  |
 | GET /entries/:entryId                            | Fetch a single entry               |
 | POST /entries                                    | Create an entry                    |
-| PUT /entries/:entryId                            | Modify and entry                   |
-| DELETE /entries/:entryId                         | Delete and entry                   |
+| PUT /entries/:entryId                            | Modify an entry                    |
+| DELETE /entries/:entryId                         | Delete an entry                    |
 
 ## MyDiary App UI Template
 The gh-pages branch contains the template UI for the MyDiary app

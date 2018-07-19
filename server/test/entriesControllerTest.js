@@ -13,7 +13,7 @@ describe('Entries controller', () => {
     len = testDB.length
   })
 
-  describe('Getting all the entries', () => {
+  describe('GET all the entries', () => {
     it('GET to /api/v1/entries should return all the diary entries', done => {
       request(app)
         .get('/api/v1/entries')
@@ -26,7 +26,7 @@ describe('Entries controller', () => {
     });
   });
 
-  describe('Getting a single entry', () => {
+  describe('GET a single entry', () => {
     it('GET to /api/v1/entries/1 should return a single diary entry', done => {
       request(app)
         .get('/api/v1/entries/1')

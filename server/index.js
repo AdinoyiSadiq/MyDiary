@@ -7,9 +7,6 @@ const app = express();
 
 app.use(bodyParser.json({ type: 'application/json' }));
 app.use('/api/v1/', router);
-app.use((err, req, res) => {
-  res.status(422).send({ error: err });
-});
 
 const port = process.env.PORT || 3090;
 const server = http.createServer(app);

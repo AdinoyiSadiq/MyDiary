@@ -32,17 +32,25 @@
 
 		<main>
 			<section>
-				<div class="heading">Profile</div>
-				<div class="userName">Adinoyi Sadiq</div>
-				<div class="entriesNumber">Number of Entries: <a href="./entries.html">4</a></div>
-
 				<div>
-					<div class="addReminder">
-						<a class="active">Add Reminder</a>
+					<div class="sectionToggle">
+						<a class="active" id="profileToggle">My Profile</a>
+						<a id="reminderToggle">Add Reminder</a>
 					</div>
 
-					<article class="setTime">
+					<article class="profileSection">
+						<div class="myProfile" id="profile">
+							<header>
+								<h1>Adinoyi Sadiq</h1>
+							</header>
+							<div class="firstName"><b>Name:</b> <span>Adinoyi</span></div>
+							<div class="lastName"><b>Surname:</b> <span>Sadiq</span></div>
+							<div class="email"><b>Email:</b> <span>sadiqadinoyi@gmail.com</span></div>
+							<div class="entriesNumber"><b>Entries:</b> <span> 4</span></div>
+						</div>
+					</article>
 
+					<article class="profileSection" id="clock">
 						<div class="timeText">
 							<span id="hr">00</span>
 							<span>:</span>
@@ -93,11 +101,6 @@
 						<button>Cancel</button>
 
 					</article>
-
-				</div>
-
-				<div class="signOut">
-					<a href="../authentication/signout.html">Sign out</a>
 				</div>
 			</section>
 		</main>

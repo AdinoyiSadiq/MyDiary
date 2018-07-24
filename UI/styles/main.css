@@ -409,6 +409,7 @@ hr {
 }
 
 /* Profile */
+
 #profileContent section {
   width: 65%;
   margin: 2rem 2rem 2rem 14rem;
@@ -424,12 +425,20 @@ hr {
   font-size: 1.5rem;
 }
 
+#profileContent .sectionToggle a:nth-of-type(1) {
+    margin-right: 2rem;
+}
+
+#profileContent .sectionToggle a:nth-of-type(2) {
+    margin-left: 2rem;
+}
+
 #profileContent section a {
   text-decoration: none;
   color: black;
 }
 
-#profileContent .addReminder {
+#profileContent .sectionToggle {
   cursor: pointer;
 }
 
@@ -438,7 +447,7 @@ hr {
   color: #3FC2B9;
 }
 
-.addReminder > a:hover {
+.sectionToggle > a:hover {
   color: #3FC2B9;
 }
 
@@ -446,7 +455,7 @@ hr {
   color: #3FC2B9;
 }
 
-#profileContent .setTime {
+#profileContent .profileSection {
   margin: 5% auto 0;
   width: 50%;
   background: white;
@@ -455,7 +464,7 @@ hr {
   box-shadow:0 0 5px 5px rgba(0,0,0,0.1);
 }
 
-#profileContent .setTime .timeText {
+#profileContent .profileSection .timeText {
   padding-top: 1.2rem;
   margin-left: 2.5rem;
 }
@@ -472,7 +481,7 @@ hr {
   color: #3FC2B9;
 }
 
-#profileContent .setTime .timeText #am, #pm {
+#profileContent .profileSection .timeText #am, #pm {
   font-size: .5rem;
 }
 
@@ -498,15 +507,54 @@ hr {
   stroke-width: 3px;
 }
 
-#profileContent .setTime button {
+#profileContent .profileSection button {
   background: #ffc600;
   width: 30%;
   margin-bottom: .5rem;
   border-bottom: 2px solid #F3C010;
 }
 
-#profileContent .setTime button:active {
+#profileContent .profileSection button:active {
   background-color: #F3C010;
+}
+
+/* My Profile */
+.profileSection header{
+  background-color: #ffc600;
+  border-radius: .5em .5em 0 0;
+  border-bottom: 5px solid #F3C010;
+  padding: .1rem;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+}
+
+.profileSection > div {
+  padding-bottom: 5%;
+}
+
+.profileSection .firstName, .lastName, .email, .entriesNumber {
+  text-align: left !important;
+  padding-left: 2rem;
+}
+
+.profileSection b {
+  font-size: .8rem;
+}
+
+.profileSection .firstName > span {
+  padding-left: 12%;
+}
+
+.profileSection .lastName > span {
+  padding-left: 7%;
+}
+
+.profileSection .email > span {
+  padding-left: 13%;
+}
+
+.profileSection .entriesNumber > span {
+  padding-left: 12%;
 }
 
 /* Sign Out */
@@ -612,8 +660,12 @@ hr {
     margin: 2rem 2rem 2rem 7rem;
   }
 
-  #profileContent .setTime {
+  #profileContent .profileSection {
     width: 270px;
+  }
+  
+  .profileSection span {
+    font-size: .8rem;
   }
 
   .signout {
@@ -755,7 +807,7 @@ hr {
     font-size: 1.2rem;
   }
 
-  #profileContent section .entriesNumber, #profileContent section .addReminder > a, .signOut {
+  #profileContent section .entriesNumber, #profileContent section .sectionToggle > a, .signOut {
     font-size: .8rem;
   }
 
@@ -765,8 +817,20 @@ hr {
     margin-left: 2rem;
   }
 
-  #profileContent .setTime {
+  #profileContent .profileSection {
     width: 240px;
+  }
+
+  .profileSection #profile span {
+    font-size: .8rem;
+  }
+
+  .profileSection #profile span {
+    padding-left: 0 !important;
+  }
+
+  .profileSection #profile span {
+    display: block;
   }
 
   /* Sign Out */

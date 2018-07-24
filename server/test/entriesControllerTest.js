@@ -74,7 +74,7 @@ describe('Entries controller', () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('Missng field/s')
+          expect(res.body.message).to.equal('Please fill the content field');
           done();
         });
     });
@@ -142,7 +142,7 @@ describe('Entries controller', () => {
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('Missng field/s');
+          expect(res.body.message).to.equal('Please fill the content field');
 		  done();
         });
     });

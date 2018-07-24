@@ -1,4 +1,4 @@
-const checkFields = data => Object.keys(data).some(field => !data[field]);
+const checkFields = data => Object.keys(data).filter(field => !data[field]);
 
 export default {
   entryPost(req, res, next) {
@@ -6,9 +6,17 @@ export default {
     const len = Object.keys(req.body).length;
     const missing = checkFields({ authorID, title, content });
 
-    if (missing) {
-      return res.status(400).send({ message: 'Missng field/s' });
+    if (authorID || title || content) {
+      if (missing.length === 1) {
+        return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
+      }
+      if (missing.length === 2) {
+        return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
+      }
+    } else {
+      return res.status(400).send({ message: `Please fill the ${missing[0]}, ${missing[1]} and ${missing[2]} fields` });
     }
+
     if (len > 3) {
       return res.status(400).send({ message: 'Too many fields' });
     }
@@ -20,9 +28,14 @@ export default {
     const len = Object.keys(req.body).length;
     const missing = checkFields({ title, content });
 
-    if (missing) {
-      return res.status(400).send({ message: 'Missng field/s' });
+    if (title || content) {
+      if (missing.length === 1) {
+        return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
+      }
+    } else {
+      return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
+
     if (len > 2) {
       return res.status(400).send({ message: 'Too many fields' });
     }

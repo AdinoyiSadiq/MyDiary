@@ -23,6 +23,8 @@ export default {
           entry: singleEntry[0],
           message: 'Diary Entry Retrieved Successfully',
         });
+      } else if (singleEntry.length > 1) {
+        res.status(500).send({ error: 'An error occurred while retrieving the entry' });
       } else {
         res.status(404).send({ message: 'Entry not found' });
       }

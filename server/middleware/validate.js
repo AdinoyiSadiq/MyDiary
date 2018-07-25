@@ -42,4 +42,41 @@ export default {
 
     next();
   },
+  signupPost(req, res, next) {
+    const {
+      firstName,
+      lastName,
+      email,
+      password,
+    } = req.body;
+
+    const len = Object.keys(req.body).length;
+    const missing = checkFields({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+
+    let errorString = 'Please fill the ';
+
+    missing.forEach((field) => {
+      if (missing[missing.length - 1] === field && missing.length !== 1) {
+        errorString += `and ${field} fields`;
+      } else if (missing.length === 1) {
+        errorString += `${field} field`;
+      } else {
+        errorString += `${field}, `;
+      }
+    });
+
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).send({ message: errorString });
+    }
+    if (len > 4) {
+      return res.status(400).send({ message: 'Too many fields' });
+    }
+
+    next();
+  },
 };

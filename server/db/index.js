@@ -1,6 +1,8 @@
 import pg from 'pg';
-import dev from '../config/dev';
+import dotenv from 'dotenv';
 
-const db = new pg.Pool({ connectionString: dev.connectionString });
+dotenv.config();
+
+const db = new pg.Pool({ connectionString: process.env.DEVELOPMENT });
 
 export default db;

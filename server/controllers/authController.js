@@ -21,9 +21,9 @@ export default {
       lastName,
     } = req.body;
 
+
     db.query('SELECT * FROM users WHERE email=$1', [email], async (error, response) => {
       if (error) { return next(error); }
-
       if (response.rowCount > 0) {
         return res.status(422).json({ message: 'Email is in use' });
       }

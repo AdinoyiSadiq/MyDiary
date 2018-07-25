@@ -12,7 +12,7 @@
     "dev": "nodemon server/index.js --exec babel-node --presets es2015,stage-2",
     "build": "babel server -d dist",
     "serve": "node dist/index.js",
-    "test": "nyc mocha server/test/* --compilers js:babel-register",
+    "test": "NODE_ENV=test nyc mocha server/test/* --compilers js:babel-register",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": "Adinoyi Sadiq",
@@ -35,6 +35,7 @@
     "babel-register": "^6.26.0",
     "chai": "4.1.2",
     "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",

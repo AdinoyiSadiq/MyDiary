@@ -1,8 +1,15 @@
 import express from 'express';
 import entriesController from '../controllers/entriesController';
+import authController from '../controllers/authController';
 import validate from '../middleware/validate';
 
 const router = express.Router();
+
+/* auth routes */
+
+router.post('/auth/signup', validate.signupPost, authController.signup);
+
+/* main routes */
 
 router.get('/entries', entriesController.getAllEntries);
 router.get('/entries/:id', entriesController.getEntry);

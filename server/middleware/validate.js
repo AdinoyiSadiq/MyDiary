@@ -79,4 +79,23 @@ export default {
 
     next();
   },
+  signinPost(req, res, next) {
+    const { email, password } = req.body;
+    const len = Object.keys(req.body).length;
+    const missing = checkFields({ email, password });
+
+    if (email || password) {
+      if (missing.length === 1) {
+        return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
+      }
+    } else {
+      return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
+    }
+
+    if (len > 2) {
+      return res.status(400).send({ message: 'Too many fields' });
+    }
+
+    next();
+  },
 };

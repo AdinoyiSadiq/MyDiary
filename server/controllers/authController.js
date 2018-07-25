@@ -43,4 +43,7 @@ export default {
       );
     });
   },
+  signin(req, res) {
+    res.send({ token: tokenForUser(req.user.id) });
+  },
 };

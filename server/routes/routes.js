@@ -1,13 +1,19 @@
 import express from 'express';
+import passport from 'passport';
 import entriesController from '../controllers/entriesController';
 import authController from '../controllers/authController';
 import validate from '../middleware/validate';
+import '../services/passport';
+
 
 const router = express.Router();
+
+const requireSignin = passport.authenticate('local', { session: false });
 
 /* auth routes */
 
 router.post('/auth/signup', validate.signupPost, authController.signup);
+router.post('/auth/signin', validate.signinPost, requireSignin, authController.signin);
 
 /* main routes */
 

@@ -62,29 +62,28 @@ export default {
   },
   editEntry(req, res, next) {
     try {
+      const queryString = 'UPDATE entries SET title=$1, content=$2, updated=$3 WHERE user_id=$4 AND id=$5 RETURNING *';
+
       const entryID = parseInt(req.params.id, 10);
       const { title, content } = req.body;
+      const { id } = req.user;
+      const updatedAt = Date.now();
 
-      const exists = entries.find(entry => entry.id === entryID);
-
-      if (exists) {
-        let entryIndex;
-        entries.forEach((entry, index) => {
-          if (entry.id === entryID) {
-            entryIndex = index;
-            entries[index].title = title;
-            entries[index].content = content;
-            entries[index].updatedAt = Date.now();
-          }
-        });
-
-        res.send({
-          entry: entries[entryIndex],
-          message: 'Edited Diary Entry Successfully',
-        });
-      } else {
-        res.status(404).send({ message: 'Entry not found' });
-      }
+      db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
+        const len = Object.keys(result.rows).length;
+        if (len === 1) {
+          db.query(queryString, [title, content, updatedAt, id, entryID], (error, resp) => {
+            res.send({
+              entry: resp.rows[0],
+              message: 'Edited Diary Entry Successfully',
+            });
+          });
+        } else if (len > 1) {
+          res.status(500).send({ error: 'An error occurred while updating the entry' });
+        } else {
+          res.status(404).send({ message: 'Entry not found' });
+        }
+      });
     } catch (error) {
       next(error);
     }

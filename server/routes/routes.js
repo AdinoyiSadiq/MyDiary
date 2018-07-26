@@ -5,7 +5,6 @@ import authController from '../controllers/authController';
 import validate from '../middleware/validate';
 import '../services/passport';
 
-
 const router = express.Router();
 
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -22,8 +21,8 @@ router.post('/entries', requireAuth, validate.entryPost, entriesController.creat
 router.get('/entries', requireAuth, entriesController.getAllEntries);
 
 router.get('/entries/:id', requireAuth, entriesController.getEntry);
+router.put('/entries/:id', requireAuth, validate.entryUpdate, entriesController.editEntry);
 
-router.put('/entries/:id', validate.entryUpdate, entriesController.editEntry);
 router.delete('/entries/:id', entriesController.deleteEntry);
 
 router.all('*', (req, res) => {

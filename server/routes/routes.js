@@ -20,7 +20,7 @@ router.post('/auth/signin', validate.signinPost, requireSignin, authController.s
 
 router.post('/entries', requireAuth, validate.entryPost, entriesController.createEntry);
 
-router.get('/entries', entriesController.getAllEntries);
+router.get('/entries', requireAuth, entriesController.getAllEntries);
 router.get('/entries/:id', entriesController.getEntry);
 
 router.put('/entries/:id', validate.entryUpdate, entriesController.editEntry);

@@ -25,9 +25,13 @@ export default {
   },
   getAllEntries(req, res, next) {
     try {
-      res.send({
-        entries,
-        message: 'All Diary Entries Retrieved Successfully',
+      const queryString = 'SELECT * FROM entries WHERE user_id=$1';
+      const { id } = req.user;
+      db.query(queryString, [id], (err, result) => {
+        res.send({
+          entries: result.rows,
+          message: 'All Diary Entries Retrieved Successfully',
+        });
       });
     } catch (error) {
       next(error);
@@ -35,7 +39,9 @@ export default {
   },
   getEntry(req, res, next) {
     try {
+      const queryString = 'SELECT * FROM entries WHERE user_id=$1';
       const entryID = parseInt(req.params.id, 10);
+
       const singleEntry = entries.filter(entry => entry.id === entryID);
 
       if (singleEntry.length === 1) {

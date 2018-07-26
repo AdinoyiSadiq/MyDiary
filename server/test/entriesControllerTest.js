@@ -20,6 +20,18 @@ describe('Entries controller', () => {
       () => {},
     );
 
+    afterEach(() => {
+      db.query('DROP TABLE public.users',
+        () => {},
+      )
+    });
+
+    afterEach(() => {
+      db.query('DROP TABLE public.entries',
+        () => {},
+      )
+    });
+
     testDB = resetTestDB();
     len = testDB.length
   });
@@ -89,8 +101,25 @@ describe('Entries controller', () => {
 
   describe('GET all the entries', () => {
     it('GET to /api/v1/entries should return all the diary entries', done => {
+      let token;
+
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          "email": "adinoyi@gmail.com",
+          "password": "myPassword",
+          "firstName": "Adinoyi",
+          "lastName": "Sadiq"
+        })
+        .end((err, res) => {
+          token = res.body.token
+          done();
+        });
+
       request(app)
         .get('/api/v1/entries')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.entries.length).to.equal(len);
@@ -101,9 +130,28 @@ describe('Entries controller', () => {
   });
 
   describe('GET a single entry', () => {
+    beforeEach((done) => {
+      let token;
+      
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          "email": "adinoyi@gmail.com",
+          "password": "myPassword",
+          "firstName": "Adinoyi",
+          "lastName": "Sadiq"
+        })
+        .end((err, res) => {
+          token = res.body.token
+          done();
+        });
+    })
+
     it('GET to /api/v1/entries/1 should return a single diary entry', done => {
       request(app)
         .get('/api/v1/entries/1')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.entry.title).to.equal('The Andela Way')
@@ -114,6 +162,8 @@ describe('Entries controller', () => {
     it('should return an error when an entry is not found', done => {
 	  request(app)
         .get('/api/v1/entries/2')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Entry not found')

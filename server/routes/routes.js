@@ -19,9 +19,9 @@ router.post('/auth/signin', validate.signinPost, requireSignin, authController.s
 /* main routes */
 
 router.post('/entries', requireAuth, validate.entryPost, entriesController.createEntry);
-
 router.get('/entries', requireAuth, entriesController.getAllEntries);
-router.get('/entries/:id', entriesController.getEntry);
+
+router.get('/entries/:id', requireAuth, entriesController.getEntry);
 
 router.put('/entries/:id', validate.entryUpdate, entriesController.editEntry);
 router.delete('/entries/:id', entriesController.deleteEntry);

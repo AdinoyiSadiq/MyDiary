@@ -1,8 +1,28 @@
-import Entry, { db } from '../models/entry';
+import Entry, { db as database } from '../models/entry';
+import db from '../db';
 
-let entries = db;
+let entries = database;
 
 export default {
+  createEntry(req, res, next) {
+    try {
+      const queryString = 'INSERT INTO public.entries(user_id, title, content, created, updated) VALUES ($1, $2, $3, $4, $5) RETURNING *';
+      const { id } = req.user;
+      const { title, content } = req.body;
+      const entry = new Entry(id, title, content);
+
+      db.query(queryString,
+        [entry.authorID, entry.title, entry.content, entry.createdAt, entry.updatedAt],
+        (err, result) => {
+          res.status(201).send({
+            entry: result.rows[0],
+            message: 'Diary Entry Created Successfully',
+          });
+        });
+    } catch (error) {
+      next(error);
+    }
+  },
   getAllEntries(req, res, next) {
     try {
       res.send({
@@ -28,19 +48,6 @@ export default {
       } else {
         res.status(404).send({ message: 'Entry not found' });
       }
-    } catch (error) {
-      next(error);
-    }
-  },
-  createEntry(req, res, next) {
-    try {
-      const { authorID, title, content } = req.body;
-      const entry = new Entry(authorID, title, content);
-      entries.push(entry);
-      res.status(201).send({
-        entry,
-        message: 'Diary Entry Created Successfully',
-      });
     } catch (error) {
       next(error);
     }

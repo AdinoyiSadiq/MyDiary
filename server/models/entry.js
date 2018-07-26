@@ -11,7 +11,6 @@ export const db = [
 
 class Entry {
   constructor(authorID, title, content) {
-    this.id = (db.length) + 1;
     this.authorID = authorID;
     this.title = title;
     this.content = content;

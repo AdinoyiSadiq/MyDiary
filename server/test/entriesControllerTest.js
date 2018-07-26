@@ -173,9 +173,26 @@ describe('Entries controller', () => {
   });
 
   describe('DELETE an entry', () => {
+      let token;
+      
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          "email": "adinoyi@gmail.com",
+          "password": "myPassword",
+          "firstName": "Adinoyi",
+          "lastName": "Sadiq"
+        })
+        .end((err, res) => {
+          token = res.body.token
+          done();
+        });
+
     it('DELETE to /api/v1/entries/1 should delete a diary entry', done => {
       request(app)
         .delete('/api/v1/entries/1')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Deleted Diary Entry Successfully')
@@ -186,6 +203,8 @@ describe('Entries controller', () => {
     it('should return an error when an entry is not found', done => {
 	  request(app)
         .delete('/api/v1/entries/2')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Entry not found')

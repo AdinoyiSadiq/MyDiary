@@ -39,21 +39,23 @@ export default {
   },
   getEntry(req, res, next) {
     try {
-      const queryString = 'SELECT * FROM entries WHERE user_id=$1';
+      const queryString = 'SELECT * FROM entries WHERE user_id=$1 AND id=$2';
       const entryID = parseInt(req.params.id, 10);
+      const { id } = req.user;
 
-      const singleEntry = entries.filter(entry => entry.id === entryID);
-
-      if (singleEntry.length === 1) {
-        res.send({
-          entry: singleEntry[0],
-          message: 'Diary Entry Retrieved Successfully',
-        });
-      } else if (singleEntry.length > 1) {
-        res.status(500).send({ error: 'An error occurred while retrieving the entry' });
-      } else {
-        res.status(404).send({ message: 'Entry not found' });
-      }
+      db.query(queryString, [id, entryID], (err, result) => {
+        const len = Object.keys(result.rows).length;
+        if (len === 1) {
+          res.send({
+            entry: result.rows[0],
+            message: 'Diary Entry Retrieved Successfully',
+          });
+        } else if (len > 1) {
+          res.status(500).send({ error: 'An error occurred while retrieving the entry' });
+        } else {
+          res.status(404).send({ message: 'Entry not found' });
+        }
+      });
     } catch (error) {
       next(error);
     }

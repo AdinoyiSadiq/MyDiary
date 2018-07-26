@@ -195,9 +195,44 @@ describe('Entries controller', () => {
   });
 
   describe('UPDATE an entry', () => {
+    beforeEach((done) => {
+      let token;
+      
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          "email": "adinoyi@gmail.com",
+          "password": "myPassword",
+          "firstName": "Adinoyi",
+          "lastName": "Sadiq"
+        })
+        .end((err, res) => {
+          token = res.body.token
+          done();
+        });
+
+        request(app)
+          .post('/api/v1/entries')
+          .set('Accept', 'application/json')
+          .set({ 'authorization': token, Accept: 'application/json' })
+          .send({
+            authorID: 1,
+            title: 'A Year of Code',
+            content: 'A few weeks ago, I marked a year since I started coding every day'
+          })
+          .end((err, res) => {
+            expect(res.status).to.equal(201);
+            expect(res.body.message).to.equal('Diary Entry Created Successfully');
+            expect(res.body.entry.title).to.equal('A Year of Code');
+            done();
+          });
+    })
+
     it('PUT to /api/v1/entries/1 should update a diary entry', done => {
       request(app)
         .put('/api/v1/entries/1')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .send({
 	      title: 'Two Years of Code',
 	      content: 'So it has been two years now since I became a software developer'
@@ -213,6 +248,8 @@ describe('Entries controller', () => {
     it('should return an error when passed insufficient entry data', done => {
       request(app)
         .put('/api/v1/entries/1')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
         .send({
           title: 'A Year of Code'
         })
@@ -226,6 +263,8 @@ describe('Entries controller', () => {
 	it('should return an error when passed invalid entry data', done => {
 	  request(app)
       .put('/api/v1/entries/1')
+      .set('Accept', 'application/json')
+      .set({ 'authorization': token, Accept: 'application/json' })
       .send({
         title: 'A Year of Code',
         content: 'A few weeks ago, I marked a year since I started coding every day',

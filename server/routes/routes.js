@@ -8,6 +8,7 @@ import '../services/passport';
 
 const router = express.Router();
 
+const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
 /* auth routes */
@@ -17,9 +18,11 @@ router.post('/auth/signin', validate.signinPost, requireSignin, authController.s
 
 /* main routes */
 
-router.get('/entries', entriesController.getAllEntries);
+router.post('/entries', requireAuth, validate.entryPost, entriesController.createEntry);
+
+router.get('/entries', requireAuth, entriesController.getAllEntries);
 router.get('/entries/:id', entriesController.getEntry);
-router.post('/entries', validate.entryPost, entriesController.createEntry);
+
 router.put('/entries/:id', validate.entryUpdate, entriesController.editEntry);
 router.delete('/entries/:id', entriesController.deleteEntry);
 

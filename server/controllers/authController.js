@@ -21,17 +21,15 @@ export default {
       lastName,
     } = req.body;
 
-
-    db.query('SELECT * FROM users WHERE email=$1', [email], async (error, response) => {
+    db.query('SELECT * FROM users WHERE email=$1', [email], (error, response) => {
       if (error) { return next(error); }
       if (response.rowCount > 0) {
-        return res.status(422).json({ message: 'Email is in use' });
+        return res.status(409).json({ message: 'Email is in use' });
       }
 
       const user = new User(email, password, firstName, lastName);
 
       user.encryptPassword();
-
       return db.query(
         queryString,
         [user.email, user.password, user.firstName, user.lastName],

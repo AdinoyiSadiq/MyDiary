@@ -18,7 +18,7 @@ router.post('/auth/signin', validate.signinPost, requireSignin, authController.s
 
 /* main routes */
 
-router.post('/entries', validate.entryPost, requireAuth, entriesController.createEntry);
+router.post('/entries', requireAuth, validate.entryPost, entriesController.createEntry);
 
 router.get('/entries', entriesController.getAllEntries);
 router.get('/entries/:id', entriesController.getEntry);

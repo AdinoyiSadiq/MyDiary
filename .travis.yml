@@ -13,6 +13,8 @@ branches:
     - test
 services:
   - postgresql
+env:
+  - SECRET=ndnndne6hw3u44bdjdjdj
 install:
   - npm install
 before_script:

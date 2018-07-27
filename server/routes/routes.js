@@ -23,7 +23,7 @@ router.get('/entries', requireAuth, entriesController.getAllEntries);
 router.get('/entries/:id', requireAuth, entriesController.getEntry);
 router.put('/entries/:id', requireAuth, validate.entryUpdate, entriesController.editEntry);
 
-router.delete('/entries/:id', entriesController.deleteEntry);
+router.delete('/entries/:id', requireAuth, entriesController.deleteEntry);
 
 router.all('*', (req, res) => {
   res.status(404).json({

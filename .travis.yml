@@ -10,7 +10,7 @@ cache:
     - node_modules
 branches:
   only:
-    - develop
+    - test
 services:
   - postgresql
 install:

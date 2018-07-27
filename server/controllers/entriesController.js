@@ -90,18 +90,24 @@ export default {
   },
   deleteEntry(req, res, next) {
     try {
+      const queryString = 'DELETE FROM entries WHERE id=$1 AND user_id=$2';
       const entryID = parseInt(req.params.id, 10);
-      const exists = entries.find(entry => entry.id === entryID);
+      const { id } = req.user;
 
-      if (exists) {
-        const newEntries = entries.filter(entry => entry.id !== entryID);
-        entries = newEntries;
-        res.send({
-          message: 'Deleted Diary Entry Successfully',
-        });
-      } else {
-        res.status(404).send({ message: 'Entry not found' });
-      }
+      db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
+        const len = Object.keys(result.rows).length;
+        if (len === 1) {
+          db.query(queryString, [entryID, id], () => {
+            res.send({
+              message: 'Deleted Diary Entry Successfully',
+            });
+          });
+        } else if (len > 1) {
+          res.status(500).send({ error: 'An error occurred while updating the entry' });
+        } else {
+          res.status(404).send({ message: 'Entry not found' });
+        }
+      });
     } catch (error) {
       next(error);
     }

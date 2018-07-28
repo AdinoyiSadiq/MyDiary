@@ -11,6 +11,8 @@ cache:
 branches:
   only:
     -  ch-159381385-implement-week1-feedback
+services:
+  - postgresql
 install:
   - npm install
 before_script:

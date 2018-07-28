@@ -6,7 +6,7 @@
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.
 
-## API Endpoint: [API](https://limitless-brook-47907.herokuapp.com/api/v1/entries)
+## API Endpoint: [https://limitless-brook-47907.herokuapp.com/api/v1/entries](https://limitless-brook-47907.herokuapp.com/api/v1/entries)
 
 ## Documentation
 Find the API documentation here: [MyDiary API Documentation](https://mydiary2.docs.apiary.io/)

@@ -14,7 +14,7 @@ export default {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 
-    if (len > 3) {
+    if (len > 2) {
       return res.status(400).send({ message: 'Too many fields' });
     }
 

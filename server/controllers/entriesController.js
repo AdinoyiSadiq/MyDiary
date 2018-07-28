@@ -10,7 +10,6 @@ export default {
       const id = req.userID;
       const { title, content } = req.body;
       const entry = new Entry(id, title, content);
-
       db.query(queryString,
         [entry.authorID, entry.title, entry.content, entry.createdAt, entry.updatedAt],
         (err, result) => {

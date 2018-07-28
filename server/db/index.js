@@ -9,7 +9,7 @@ const usersQuery = `
 CREATE TABLE public.users (
 id SERIAL PRIMARY KEY,
 firstname character varying(100) NOT NULL,
-lastname character varying(100) NOT NULL,
+lastname character varying(100) NOT NULL, 
 email character varying(100) NOT NULL,
 password character varying(100) NOT NULL
 )`;
@@ -25,22 +25,14 @@ updated bigint NOT NULL
 );`;
 
 db.connect((err, client, done) => {
-  client.query(usersQuery, (error, res) => {
+  client.query(usersQuery, () => {
     done();
-
-    if (err) {
-      console.log(err.stack);
-    }
   });
 });
 
 db.connect((err, client, done) => {
-  client.query(entriesQuery, (error, res) => {
+  client.query(entriesQuery, () => {
     done();
-
-    if (err) {
-      console.log(err.stack);
-    }
   });
 });
 

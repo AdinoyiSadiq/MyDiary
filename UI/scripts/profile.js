@@ -11,7 +11,7 @@ window.onload = function() {
 	const profileToggle = document.querySelector('#profileToggle');
 
 	const clockModal = document.querySelector('#clock');
-	const profileModal = document.querySelector('#profile');
+	const profileModal = document.querySelector('.myProfile');
 
 	const hourClock = document.querySelector('.hourClock');
 	const minuteClock = document.querySelector('.minuteClock');

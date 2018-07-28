@@ -10,7 +10,7 @@ cache:
     - node_modules
 branches:
   only:
-    - server
+    -  ch-159381385-implement-week1-feedback
 install:
   - npm install
 before_script:

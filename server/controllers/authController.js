@@ -1,4 +1,5 @@
-import jwt from 'jwt-simple';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt-nodejs';
 import dotenv from 'dotenv';
 
 import db from '../db';
@@ -6,9 +7,8 @@ import User from '../models/user';
 
 dotenv.config();
 
-function tokenForUser(userID) {
-  const timestamp = new Date().getTime();
-  return jwt.encode({ sub: userID, iat: timestamp }, process.env.SECRET);
+function createToken(userID) {
+  return jwt.sign({ id: userID }, process.env.SECRET, { expiresIn: 86400 });
 }
 
 export default {
@@ -36,12 +36,27 @@ export default {
         (err, resp) => {
           if (err) { return next(err); }
 
-          res.send({ token: tokenForUser(resp.rows[0].id) });
+          res.send({ token: createToken(resp.rows[0].id) });
         },
       );
     });
   },
-  signin(req, res) {
-    res.send({ token: tokenForUser(req.user.id) });
+  signin(req, res, next) {
+    const { email, password } = req.body;
+    db.query('SELECT * FROM users WHERE email=$1', [email], (error, resp) => {
+      if (error) { return next(error); }
+      if (resp.rowCount > 0) {
+        bcrypt.compare(password, resp.rows[0].password, (err, match) => {
+          if (err) { return next(err); }
+          if (match) {
+            res.send({ token: createToken(resp.rows[0].id) });
+          } else {
+            res.send({ message: 'Invalid email or password' });
+          }
+        });
+      } else {
+        res.send({ message: 'Invalid email or password' });
+      }
+    });
   },
 };

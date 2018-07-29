@@ -60,6 +60,21 @@ describe('Entries controller', () => {
         });
     });
 
+    it('should return an error when passed insufficient entry data', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: '',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the title field');
+          done();
+        });
+    });
+
     it('should return an error when passed invalid entry data', done => {
       request(app)
         .post('/api/v1/entries')
@@ -75,6 +90,35 @@ describe('Entries controller', () => {
           done();
         });
     });
+
+    it('POST to /api/v1/entries should return an error when the wrong url is used', done => {
+      request(app)
+        .post('/api/v1/entrie')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('POST to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login');
+          done();
+        });
+    });
   });
 
   describe('GET all the entries', () => {
@@ -85,6 +129,29 @@ describe('Entries controller', () => {
         .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('All Diary Entries Retrieved Successfully')
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries should return an error when the wrong url is used', done => {
+      request(app)
+        .get('/api/v1/entrie')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .get('/api/v1/entries')
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
           done();
         });
     });
@@ -105,7 +172,8 @@ describe('Entries controller', () => {
           done();
         });
   	});
-  	it('GET to /api/v1/entries/1 should return a single diary entry', done => {
+
+  	it('GET to /api/v1/entries/:id should return a single diary entry', done => {
       request(app)
         .get(`/api/v1/entries/${id}`)
         .set('Accept', 'application/json')
@@ -116,13 +184,36 @@ describe('Entries controller', () => {
           done();
         });
     });
-    it('GET to /api/v1/entries/1 should return a single diary entry', done => {
+
+    it('GET to /api/v1/entries/:id should return a single diary entry', done => {
       request(app)
         .get(`/api/v1/entries/1000000`)
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Entry not found');
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .get(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .get(`/api/v1/entries/${id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
           done();
         });
     });
@@ -165,6 +256,27 @@ describe('Entries controller', () => {
           done();
         });
     });
+
+    it('DELETE to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .delete(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('DELETE to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .delete(`/api/v1/entries/${id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
+          done();
+        });
+    });
   });
 
   describe('UPDATE an entry', () => {
@@ -193,10 +305,11 @@ describe('Entries controller', () => {
 	      content: 'So it has been two years now since I became a software developer'
         })
         .end((err, res) => {
-	      expect(res.status).to.equal(200);
-	      expect(res.body.message).to.equal('Edited Diary Entry Successfully');
-	      expect(res.body.entry.title).to.equal('Two Years of Code')
-	      done();
+	        expect(res.status).to.equal(200);
+	        expect(res.body.message).to.equal('Edited Diary Entry Successfully');
+	        expect(res.body.entry.title).to.equal('Two Years of Code');
+          expect(res.body.entry.content).to.equal('So it has been two years now since I became a software developer');
+	        done();
         });
     });
 
@@ -216,6 +329,22 @@ describe('Entries controller', () => {
         });
     });
 
+    it('should return an error when passed insufficient entry data', done => {
+      request(app)
+        .put(`/api/v1/entries/${id}`)
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .send({
+          title: '',
+          content: 'So it has been two years now since I became a software developer'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the title field');
+      done();
+        });
+    });
+
     it('should return an error when passed invalid entry data', done => {
 	  request(app)
       .put(`/api/v1/entries/${id}`)
@@ -231,6 +360,31 @@ describe('Entries controller', () => {
         expect(res.body.message).to.equal('Too many fields');
         done();
       });
+    });
+ 
+    it('PUT to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .put(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('PUT to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .put(`/api/v1/entries/${id}`)
+        .send({
+        title: 'Two Years of Code',
+        content: 'So it has been two years now since I became a software developer'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login');
+          done();
+        });
     });
   });  
 });

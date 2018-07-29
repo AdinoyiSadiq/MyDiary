@@ -1,16 +1,14 @@
-import Entry, { db as database } from '../models/entry';
+import Entry from '../models/entry';
 import db from '../db';
 
-let entries = database;
 
 export default {
   createEntry(req, res, next) {
     try {
       const queryString = 'INSERT INTO public.entries(user_id, title, content, created, updated) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-      const { id } = req.user;
+      const id = req.userID;
       const { title, content } = req.body;
       const entry = new Entry(id, title, content);
-
       db.query(queryString,
         [entry.authorID, entry.title, entry.content, entry.createdAt, entry.updatedAt],
         (err, result) => {
@@ -26,7 +24,7 @@ export default {
   getAllEntries(req, res, next) {
     try {
       const queryString = 'SELECT * FROM entries WHERE user_id=$1';
-      const { id } = req.user;
+      const id = req.userID;
       db.query(queryString, [id], (err, result) => {
         res.send({
           entries: result.rows,
@@ -41,7 +39,7 @@ export default {
     try {
       const queryString = 'SELECT * FROM entries WHERE user_id=$1 AND id=$2';
       const entryID = parseInt(req.params.id, 10);
-      const { id } = req.user;
+      const id = req.userID;
 
       db.query(queryString, [id, entryID], (err, result) => {
         const len = Object.keys(result.rows).length;
@@ -66,7 +64,7 @@ export default {
 
       const entryID = parseInt(req.params.id, 10);
       const { title, content } = req.body;
-      const { id } = req.user;
+      const id = req.userID;
       const updatedAt = Date.now();
 
       db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
@@ -92,7 +90,7 @@ export default {
     try {
       const queryString = 'DELETE FROM entries WHERE id=$1 AND user_id=$2';
       const entryID = parseInt(req.params.id, 10);
-      const { id } = req.user;
+      const id = req.userID;
 
       db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
         const len = Object.keys(result.rows).length;
@@ -113,18 +111,3 @@ export default {
     }
   },
 };
-
-export function resetTestDB() {
-  entries = [
-    {
-      id: 1,
-      authorID: 1,
-      title: 'The Andela Way',
-      content: 'The Andela bootcamp is a popularly known program amongst programmers.',
-      createdAt: 1531513412307,
-      updatedAt: 1531513412307,
-    },
-  ];
-  const testData = entries;
-  return testData;
-}

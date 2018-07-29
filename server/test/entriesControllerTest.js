@@ -1,62 +1,39 @@
 import { expect } from 'chai';
 import request from 'supertest';
-import db from '../db';
 import app from '..';
+import resetDB from '../helpers/resetDB';
 
-import { resetTestDB } from '../controllers/entriesController';
+let token;
 
 describe('Entries controller', () => {
-  let testDB;
-  let len;
-
-  beforeEach(() => {
-    let token;
-
-    db.query('CREATE TABLE IF NOT EXISTS public.users (id SERIAL PRIMARY KEY, firstname character varying(100) NOT NULL, lastname character varying(100) NOT NULL, email character varying(100) NOT NULL, password character varying(100) NOT NULL)',
-      () => {},
-    );
-
-    db.query('CREATE TABLE public.entries (id SERIAL PRIMARY KEY, user_id integer REFERENCES public.users, title character varying(100) NOT NULL, content character varying(255) NOT NULL, created bigint NOT NULL, updated bigint NOT NULL',
-      () => {},
-    );
-
-    afterEach(() => {
-      db.query('DROP TABLE public.users',
-        () => {},
-      )
+  before((done) => {
+  resetDB.resetDB();
+  request(app)
+    .post('/api/v1/auth/signup')
+    .send({
+      "email": "noyisama@gmail.com",
+      "password": "myPassword",
+      "firstName": "Adinoyi",
+      "lastName": "Sadiq"
+    })
+    .end((err, res) => {
+      token = res.body.token
+      done();
     });
-
-    afterEach(() => {
-      db.query('DROP TABLE public.entries',
-        () => {},
-      )
-    });
-
-    testDB = resetTestDB();
-    len = testDB.length
   });
+
+  // after((done) => {
+  //   resetDB.resetDB();
+
+  //   done();
+  // });
 
   describe('Creating an entry', () => {
     it('POST to /api/v1/entries should create a new diary entry', done => {
       request(app)
-        .post('/api/v1/auth/signup')
-        .send({
-          "email": "adinoyi@gmail.com",
-          "password": "myPassword",
-          "firstName": "Adinoyi",
-          "lastName": "Sadiq"
-        })
-        .end((err, res) => {
-          token = res.body.token
-          done();
-        });
-
-      request(app)
         .post('/api/v1/entries')
-        .set('Accept', 'application/json')
-        .set({ 'authorization': token, Accept: 'application/json' })
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .send({
-          authorID: 1,
           title: 'A Year of Code',
           content: 'A few weeks ago, I marked a year since I started coding every day'
         })
@@ -71,9 +48,10 @@ describe('Entries controller', () => {
     it('should return an error when passed insufficient entry data', done => {
       request(app)
         .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .send({
-          authorID: 1,
-          title: 'A Year of Code'
+          title: 'A Year of Code',
+          content: ''
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -82,14 +60,29 @@ describe('Entries controller', () => {
         });
     });
 
+    it('should return an error when passed insufficient entry data', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: '',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the title field');
+          done();
+        });
+    });
+
     it('should return an error when passed invalid entry data', done => {
       request(app)
         .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .send({
-          authorID: 1,
           title: 'A Year of Code',
           content: 'A few weeks ago, I marked a year since I started coding every day',
-          invlaid: 'Invalid data'
+          invalid: 'Invalid data'
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -97,102 +90,155 @@ describe('Entries controller', () => {
           done();
         });
     });
+
+    it('POST to /api/v1/entries should return an error when the wrong url is used', done => {
+      request(app)
+        .post('/api/v1/entrie')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('POST to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login');
+          done();
+        });
+    });
   });
 
   describe('GET all the entries', () => {
     it('GET to /api/v1/entries should return all the diary entries', done => {
-      let token;
-
-      request(app)
-        .post('/api/v1/auth/signup')
-        .send({
-          "email": "adinoyi@gmail.com",
-          "password": "myPassword",
-          "firstName": "Adinoyi",
-          "lastName": "Sadiq"
-        })
-        .end((err, res) => {
-          token = res.body.token
-          done();
-        });
-
       request(app)
         .get('/api/v1/entries')
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.entries.length).to.equal(len);
-          expect(res.body.entries[0].title).to.equal('The Andela Way')
+          expect(res.body.message).to.equal('All Diary Entries Retrieved Successfully')
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries should return an error when the wrong url is used', done => {
+      request(app)
+        .get('/api/v1/entrie')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .get('/api/v1/entries')
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
           done();
         });
     });
   });
 
   describe('GET a single entry', () => {
-    beforeEach((done) => {
-      let token;
-      
-      request(app)
-        .post('/api/v1/auth/signup')
+  	let id;
+  	beforeEach((done) => {
+  		request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .send({
-          "email": "adinoyi@gmail.com",
-          "password": "myPassword",
-          "firstName": "Adinoyi",
-          "lastName": "Sadiq"
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
         })
         .end((err, res) => {
-          token = res.body.token
+          id = res.body.entry.id;
           done();
         });
-    })
+  	});
 
-    it('GET to /api/v1/entries/1 should return a single diary entry', done => {
+  	it('GET to /api/v1/entries/:id should return a single diary entry', done => {
       request(app)
-        .get('/api/v1/entries/1')
+        .get(`/api/v1/entries/${id}`)
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body.entry.title).to.equal('The Andela Way')
+          expect(res.body.entry.title).to.equal('A Year of Code')
           done();
         });
     });
 
-    it('should return an error when an entry is not found', done => {
-	  request(app)
-        .get('/api/v1/entries/2')
+    it('GET to /api/v1/entries/:id should return a single diary entry', done => {
+      request(app)
+        .get(`/api/v1/entries/1000000`)
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body.message).to.equal('Entry not found')
+          expect(res.body.message).to.equal('Entry not found');
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .get(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('GET to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .get(`/api/v1/entries/${id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
           done();
         });
     });
   });
 
   describe('DELETE an entry', () => {
-      let token;
-      
-      request(app)
-        .post('/api/v1/auth/signup')
+  	let id;
+  	beforeEach((done) => {
+  		request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .send({
-          "email": "adinoyi@gmail.com",
-          "password": "myPassword",
-          "firstName": "Adinoyi",
-          "lastName": "Sadiq"
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
         })
         .end((err, res) => {
-          token = res.body.token
+          id = res.body.entry.id;
           done();
         });
+  	});
 
     it('DELETE to /api/v1/entries/1 should delete a diary entry', done => {
       request(app)
-        .delete('/api/v1/entries/1')
-        .set('Accept', 'application/json')
-        .set({ 'authorization': token, Accept: 'application/json' })
+        .delete(`/api/v1/entries/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body.message).to.equal('Deleted Diary Entry Successfully')
@@ -202,54 +248,56 @@ describe('Entries controller', () => {
 
     it('should return an error when an entry is not found', done => {
 	  request(app)
-        .delete('/api/v1/entries/2')
-        .set('Accept', 'application/json')
-        .set({ 'authorization': token, Accept: 'application/json' })
+        .delete('/api/v1/entries/1000000')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('Entry not found')
           done();
         });
     });
+
+    it('DELETE to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .delete(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('DELETE to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .delete(`/api/v1/entries/${id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
+          done();
+        });
+    });
   });
 
   describe('UPDATE an entry', () => {
-    beforeEach((done) => {
-      let token;
-      
-      request(app)
-        .post('/api/v1/auth/signup')
+    let id;
+  	beforeEach((done) => {
+  		request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
         .send({
-          "email": "adinoyi@gmail.com",
-          "password": "myPassword",
-          "firstName": "Adinoyi",
-          "lastName": "Sadiq"
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
         })
         .end((err, res) => {
-          token = res.body.token
+          id = res.body.entry.id;
           done();
         });
+  	});
 
-        request(app)
-          .post('/api/v1/entries')
-          .set('Accept', 'application/json')
-          .set({ 'authorization': token, Accept: 'application/json' })
-          .send({
-            authorID: 1,
-            title: 'A Year of Code',
-            content: 'A few weeks ago, I marked a year since I started coding every day'
-          })
-          .end((err, res) => {
-            expect(res.status).to.equal(201);
-            expect(res.body.message).to.equal('Diary Entry Created Successfully');
-            expect(res.body.entry.title).to.equal('A Year of Code');
-            done();
-          });
-    })
-
-    it('PUT to /api/v1/entries/1 should update a diary entry', done => {
+  	it('PUT to /api/v1/entries/1 should update a diary entry', done => {
       request(app)
-        .put('/api/v1/entries/1')
+        .put(`/api/v1/entries/${id}`)
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .send({
@@ -257,20 +305,22 @@ describe('Entries controller', () => {
 	      content: 'So it has been two years now since I became a software developer'
         })
         .end((err, res) => {
-	      expect(res.status).to.equal(200);
-	      expect(res.body.message).to.equal('Edited Diary Entry Successfully');
-	      expect(res.body.entry.title).to.equal('Two Years of Code')
-	      done();
+	        expect(res.status).to.equal(200);
+	        expect(res.body.message).to.equal('Edited Diary Entry Successfully');
+	        expect(res.body.entry.title).to.equal('Two Years of Code');
+          expect(res.body.entry.content).to.equal('So it has been two years now since I became a software developer');
+	        done();
         });
     });
 
     it('should return an error when passed insufficient entry data', done => {
       request(app)
-        .put('/api/v1/entries/1')
+        .put(`/api/v1/entries/${id}`)
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .send({
-          title: 'A Year of Code'
+          title: 'A Year of Code',
+          content: ''
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -279,9 +329,25 @@ describe('Entries controller', () => {
         });
     });
 
-	it('should return an error when passed invalid entry data', done => {
+    it('should return an error when passed insufficient entry data', done => {
+      request(app)
+        .put(`/api/v1/entries/${id}`)
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .send({
+          title: '',
+          content: 'So it has been two years now since I became a software developer'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the title field');
+      done();
+        });
+    });
+
+    it('should return an error when passed invalid entry data', done => {
 	  request(app)
-      .put('/api/v1/entries/1')
+      .put(`/api/v1/entries/${id}`)
       .set('Accept', 'application/json')
       .set({ 'authorization': token, Accept: 'application/json' })
       .send({
@@ -295,5 +361,30 @@ describe('Entries controller', () => {
         done();
       });
     });
-  });
+ 
+    it('PUT to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .put(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
+
+    it('PUT to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .put(`/api/v1/entries/${id}`)
+        .send({
+        title: 'Two Years of Code',
+        content: 'So it has been two years now since I became a software developer'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login');
+          done();
+        });
+    });
+  });  
 });

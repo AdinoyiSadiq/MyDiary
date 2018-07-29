@@ -1,12 +1,11 @@
-[![Build Status](https://travis-ci.org/AdinoyiSadiq/MyDiary.svg?branch=server)](https://travis-ci.org/AdinoyiSadiq/MyDiary)
-[![Coverage Status](https://coveralls.io/repos/github/AdinoyiSadiq/MyDiary/badge.svg?branch=server)](https://coveralls.io/github/AdinoyiSadiq/MyDiary?branch=server)
-[![Maintainability](https://api.codeclimate.com/v1/badges/047ca4029459a4e72c0b/maintainability)](https://codeclimate.com/github/AdinoyiSadiq/MyDiary/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/047ca4029459a4e72c0b/test_coverage)](https://codeclimate.com/github/AdinoyiSadiq/MyDiary/test_coverage)
+[![Build Status](https://travis-ci.org/AdinoyiSadiq/MyDiary.svg?branch=ch-159381385-implement-week1-feedback)](https://travis-ci.org/AdinoyiSadiq/MyDiary)
+[![Coverage Status](https://coveralls.io/repos/github/AdinoyiSadiq/MyDiary/badge.svg?branch=ch-159381385-implement-week1-feedback)](https://coveralls.io/github/AdinoyiSadiq/MyDiary?branch=ch-159381385-implement-week1-feedback)
+<!-- [![Maintainability](https://api.codeclimate.com/v1/badges/047ca4029459a4e72c0b/maintainability)](https://codeclimate.com/github/AdinoyiSadiq/MyDiary/maintainability) -->
 # MyDiary
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.
 
-## API Endpoint: [API](https://limitless-brook-47907.herokuapp.com/api/v1/entries)
+## API Endpoint: [https://limitless-brook-47907.herokuapp.com/api/v1/entries](https://limitless-brook-47907.herokuapp.com/api/v1/entries)
 
 ## Documentation
 Find the API documentation here: [MyDiary API Documentation](https://mydiary2.docs.apiary.io/)

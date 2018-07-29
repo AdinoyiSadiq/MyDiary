@@ -1,37 +1,36 @@
 import { expect } from 'chai';
 import request from 'supertest';
-import db from '../db';
 import app from '..';
+import resetDB from '../helpers/resetDB';
+
+after((done) => {
+  resetDB.resetDB();
+
+  done();
+});
 
 describe('Authentication controller', () => {
-  beforeEach(() => {
-    db.query('CREATE TABLE IF NOT EXISTS public.users (id SERIAL PRIMARY KEY, firstname character varying(100) NOT NULL, lastname character varying(100) NOT NULL, email character varying(100) NOT NULL, password character varying(100) NOT NULL)',
-      () => {},
-    )
-  });
+  beforeEach((done) => {
+    resetDB.resetDB();
 
-  afterEach(() => {
-    db.query('DROP TABLE public.users',
-      () => {},
-    )
-  });
-
+    done();
+  })
   describe('Signup a new user', () => {
-  	it('POST to /api/v1/auth/signup should create a user successfully', done => {
-  		request(app)
-  		  .post('/api/v1/auth/signup')
-  		  .send({
+    it('POST to /api/v1/auth/signup should create a user successfully', done => {
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
           "email": "adinoyi@gmail.com",
           "password": "myPassword",
           "firstName": "Adinoyi",
           "lastName": "Sadiq"
         })
-  		  .end((err, res) => {
-  		  	expect(res.status).to.equal(200);
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
           expect(res.body.token).to.be.a('string');
-  		  	done();
-  		  });
-  	});
+          done();
+        });
+    });
 
     it('Should return an error message when the user tries to sign up with no data', done => {
       request(app)
@@ -130,11 +129,11 @@ describe('Authentication controller', () => {
   });
 
   describe('Signin a new user', () => {
-    it('POST to /api/v1/auth/signin should create a authenticate a user using username and password', done => {
+    beforeEach((done) => {
       request(app)
         .post('/api/v1/auth/signup')
         .send({
-          "email": "adinoyi@gmail.com",
+          "email": "sadiqadinoyi@gmail.com",
           "password": "myPassword",
           "firstName": "Adinoyi",
           "lastName": "Sadiq"
@@ -142,11 +141,13 @@ describe('Authentication controller', () => {
         .end((err, res) => {
           done();
         });
+    });
 
+    it('POST to /api/v1/auth/signin should create a authenticate a user using username and password', done => {
       request(app)
         .post('/api/v1/auth/signin')
         .send({
-          "email": "adinoyi@gmail.com",
+          "email": "sadiqadinoyi@gmail.com",
           "password": "myPassword"
         })
         .end((err, res) => {

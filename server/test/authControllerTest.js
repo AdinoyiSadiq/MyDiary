@@ -157,63 +157,63 @@ describe('Authentication controller', () => {
         });
     });
 
-  //   it('Should return an error message when the user tries to sign in with no data', done => {
-  //     request(app)
-  //       .post('/api/v1/auth/signin')
-  //       .send({
-  //         "email": "",
-  //         "password": ""
-  //       })
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(400);
-  //         expect(res.body.message).to.equal('Please fill the email and password fields');
-  //         done();
-  //       });
-  //   });
+    it('Should return an error message when the user tries to sign in with no data', done => {
+      request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          "email": "",
+          "password": ""
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the email and password fields');
+          done();
+        });
+    });
 
-  //   it('Should return an error message when the user tries to sign in without filling the email field', done => {
-  //     request(app)
-  //       .post('/api/v1/auth/signin')
-  //       .send({
-  //         "email": "",
-  //         "password": "myPassword"
-  //       })
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(400);
-  //         expect(res.body.message).to.equal('Please fill the email field');
-  //         done();
-  //       });
-  //   });
+    it('Should return an error message when the user tries to sign in without filling the email field', done => {
+      request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          "email": "",
+          "password": "myPassword"
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the email field');
+          done();
+        });
+    });
 
-  //   it('Should return an error message when the user tries to sign in without filling the password field', done => {
-  //     request(app)
-  //       .post('/api/v1/auth/signin')
-  //       .send({
-  //         "email": "myemail@gmail.com",
-  //         "password": ""
-  //       })
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(400);
-  //         expect(res.body.message).to.equal('Please fill the password field');
-  //         done();
-  //       });
-  //   });
+    it('Should return an error message when the user tries to sign in without filling the password field', done => {
+      request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          "email": "myemail@gmail.com",
+          "password": ""
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the password field');
+          done();
+        });
+    });
 
-  //   it('Should return an error message when the user tries to sign in after passing more than the required fields', done => {
-  //     request(app)
-  //       .post('/api/v1/auth/signup')
-  //       .send({
-  //         "email": "myemail@gmail.com",
-  //         "password": "password",
-  //         "firstName": "Adinoyi",
-  //         "lastName": "Sadiq",
-  //         "occupation": "Software developer"
-  //       })
-  //       .end((err, res) => {
-  //         expect(res.status).to.equal(400);
-  //         expect(res.body.message).to.equal('Too many fields');
-  //         done();
-  //       });
-  //   });
+    it('Should return an error message when the user tries to sign in after passing more than the required fields', done => {
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          "email": "myemail@gmail.com",
+          "password": "password",
+          "firstName": "Adinoyi",
+          "lastName": "Sadiq",
+          "occupation": "Software developer"
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Too many fields');
+          done();
+        });
+    });
   });
 });

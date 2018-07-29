@@ -23,11 +23,11 @@ describe('Entries controller', () => {
     });
   });
 
-  after((done) => {
-    resetDB.resetDB();
+  // after((done) => {
+  //   resetDB.resetDB();
 
-    done();
-  });
+  //   done();
+  // });
 
   describe('Creating an entry', () => {
     it('POST to /api/v1/entries should create a new diary entry', done => {

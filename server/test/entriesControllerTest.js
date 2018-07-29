@@ -17,7 +17,6 @@ describe('Entries controller', () => {
       "lastName": "Sadiq"
     })
     .end((err, res) => {
-      console.log(res.status)
       token = res.body.token
       done();
     });
@@ -31,7 +30,6 @@ describe('Entries controller', () => {
 
   describe('Creating an entry', () => {
     it('POST to /api/v1/entries should create a new diary entry', done => {
-      console.log('token:',token);
       request(app)
         .post('/api/v1/entries')
         .set({ 'authorization': token, 'Accept': 'application/json' })

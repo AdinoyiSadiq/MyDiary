@@ -28,8 +28,9 @@ describe('Entries controller', () => {
 
     done();
   });
-  
+
   describe('Creating an entry', () => {
+    console.log(token);
     it('POST to /api/v1/entries should create a new diary entry', done => {
       request(app)
         .post('/api/v1/entries')

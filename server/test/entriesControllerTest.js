@@ -16,6 +16,7 @@ beforeEach((done) => {
       "lastName": "Sadiq"
     })
     .end((err, res) => {
+      console.log(res.status)
       token = res.body.token
       done();
     });

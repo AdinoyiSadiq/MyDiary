@@ -221,65 +221,65 @@ describe('Entries controller', () => {
     });
   });
 
-//   describe('DELETE an entry', () => {
-//   	let id;
-//   	beforeEach((done) => {
-//   		request(app)
-//         .post('/api/v1/entries')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .send({
-//           title: 'A Year of Code',
-//           content: 'A few weeks ago, I marked a year since I started coding every day'
-//         })
-//         .end((err, res) => {
-//           id = res.body.entry.id;
-//           done();
-//         });
-//   	});
+  describe('DELETE an entry', () => {
+  	let id;
+  	beforeEach((done) => {
+  		request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          id = res.body.entry.id;
+          done();
+        });
+  	});
 
-//     it('DELETE to /api/v1/entries/1 should delete a diary entry', done => {
-//       request(app)
-//         .delete(`/api/v1/entries/${id}`)
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(200);
-//           expect(res.body.message).to.equal('Deleted Diary Entry Successfully')
-//           done();
-//         });
-//     });
+    it('DELETE to /api/v1/entries/1 should delete a diary entry', done => {
+      request(app)
+        .delete(`/api/v1/entries/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('Deleted Diary Entry Successfully')
+          done();
+        });
+    });
 
-//     it('should return an error when an entry is not found', done => {
-// 	  request(app)
-//         .delete('/api/v1/entries/1000000')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.body.message).to.equal('Entry not found')
-//           done();
-//         });
-//     });
+    it('should return an error when an entry is not found', done => {
+	  request(app)
+        .delete('/api/v1/entries/1000000')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Entry not found')
+          done();
+        });
+    });
 
-//     it('DELETE to /api/v1/entries/:id should return an error when the wrong url is used', done => {
-//       request(app)
-//         .delete(`/api/v1/entrie/${id}`)
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.body.message).to.equal('Invalid request, Route does not exist')
-//           done();
-//         });
-//     });
+    it('DELETE to /api/v1/entries/:id should return an error when the wrong url is used', done => {
+      request(app)
+        .delete(`/api/v1/entrie/${id}`)
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
 
-//     it('DELETE to /api/v1/entries should return an error message if a token is not provided', done => {
-//       request(app)
-//         .delete(`/api/v1/entries/${id}`)
-//         .end((err, res) => {
-//           expect(res.status).to.equal(401);
-//           expect(res.body.message).to.equal('Unauthorized request, please login')
-//           done();
-//         });
-//     });
-//   });
+    it('DELETE to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .delete(`/api/v1/entries/${id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
+          done();
+        });
+    });
+  });
 
 //   describe('UPDATE an entry', () => {
 //     let id;

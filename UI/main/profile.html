@@ -18,7 +18,7 @@
 						<a title="Entries" href="./entries.html">Entries</a>
 					</li>
 					<li>
-						<a title="Profile" href="./profile.html" class="current">Adinoyi</a>
+						<a id="profile" title="Profile" class="current">Adinoyi</a>
 					</li>
 					<li>
 						<a title="Notifications" href="./notifications.html"><i class="far fa-bell"></i></a>
@@ -30,19 +30,32 @@
 			</nav>
 		</header>
 
+		<ul class="profileModal">
+			<li><a title="View Profile" href="./profile.html">View Profile</a></li>
+			<li><a title="Signout" href="../authentication/signout.html">SignOut</a></li>
+		</ul>
+
 		<main>
 			<section>
-				<div class="heading">Profile</div>
-				<div class="userName">Adinoyi Sadiq</div>
-				<div class="entriesNumber">Number of Entries: <a href="./entries.html">4</a></div>
-
 				<div>
-					<div class="addReminder">
-						<a class="active">Add Reminder</a>
+					<div class="sectionToggle">
+						<a class="active" id="profileToggle">My Profile</a>
+						<a id="reminderToggle">Add Reminder</a>
 					</div>
 
-					<article class="setTime">
+					<article class="profileSection">
+						<div class="myProfile" id="profile">
+							<header>
+								<h1>Adinoyi Sadiq</h1>
+							</header>
+							<div class="firstName"><b>Name:</b> <span>Adinoyi</span></div>
+							<div class="lastName"><b>Surname:</b> <span>Sadiq</span></div>
+							<div class="email"><b>Email:</b> <span>sadiqadinoyi@gmail.com</span></div>
+							<div class="entriesNumber"><b>Entries:</b> <span> 4</span></div>
+						</div>
+					</article>
 
+					<article class="profileSection" id="clock">
 						<div class="timeText">
 							<span id="hr">00</span>
 							<span>:</span>
@@ -93,11 +106,6 @@
 						<button>Cancel</button>
 
 					</article>
-
-				</div>
-
-				<div class="signOut">
-					<a href="../authentication/signout.html">Sign out</a>
 				</div>
 			</section>
 		</main>
@@ -107,6 +115,7 @@
 		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
 	</footer>
 
+	<script  src="../scripts/nav.js"></script>
 	<script  src="../scripts/profile.js"></script>
 </body>
 </html>

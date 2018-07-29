@@ -1,49 +1,49 @@
-// import { expect } from 'chai';
-// import request from 'supertest';
-// import app from '..';
-// import resetDB from '../helpers/resetDB';
+import { expect } from 'chai';
+import request from 'supertest';
+import app from '..';
+import resetDB from '../helpers/resetDB';
 
-// let token;
+let token;
 
-// beforeEach((done) => {
-//   resetDB.resetDB();
-//   request(app)
-//     .post('/api/v1/auth/signup')
-//     .send({
-//       "email": "adinoyi@gmail.com",
-//       "password": "myPassword",
-//       "firstName": "Adinoyi",
-//       "lastName": "Sadiq"
-//     })
-//     .end((err, res) => {
-//       token = res.body.token
-//       done();
-//     });
-// });
+beforeEach((done) => {
+  resetDB.resetDB();
+  request(app)
+    .post('/api/v1/auth/signup')
+    .send({
+      "email": "noyisama@gmail.com",
+      "password": "myPassword",
+      "firstName": "Adinoyi",
+      "lastName": "Sadiq"
+    })
+    .end((err, res) => {
+      token = res.body.token
+      done();
+    });
+});
 
-// afterEach((done) => {
-//   resetDB.resetDB();
+afterEach((done) => {
+  resetDB.resetDB();
 
-//   done();
-// });
+  done();
+});
 
-// describe('Entries controller', () => {
-//   describe('Creating an entry', () => {
-//     it('POST to /api/v1/entries should create a new diary entry', done => {
-//       request(app)
-//         .post('/api/v1/entries')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .send({
-//           title: 'A Year of Code',
-//           content: 'A few weeks ago, I marked a year since I started coding every day'
-//         })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(201);
-//           expect(res.body.message).to.equal('Diary Entry Created Successfully');
-//           expect(res.body.entry.title).to.equal('A Year of Code');
-//           done();
-//         });
-//     });
+describe('Entries controller', () => {
+  describe('Creating an entry', () => {
+    it('POST to /api/v1/entries should create a new diary entry', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body.message).to.equal('Diary Entry Created Successfully');
+          expect(res.body.entry.title).to.equal('A Year of Code');
+          done();
+        });
+    });
 
 //     it('should return an error when passed insufficient entry data', done => {
 //       request(app)
@@ -386,5 +386,5 @@
 //           done();
 //         });
 //     });
-//   });  
-// });
+  });  
+});

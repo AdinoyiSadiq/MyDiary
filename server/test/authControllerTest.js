@@ -128,20 +128,20 @@ describe('Authentication controller', () => {
     });
   });
 
-  // describe('Signin a new user', () => {
-  //   beforeEach((done) => {
-  //     request(app)
-  //       .post('/api/v1/auth/signup')
-  //       .send({
-  //         "email": "adinoyi@gmail.com",
-  //         "password": "myPassword",
-  //         "firstName": "Adinoyi",
-  //         "lastName": "Sadiq"
-  //       })
-  //       .end((err, res) => {
-  //         done();
-  //       });
-  //   });
+  describe('Signin a new user', () => {
+    beforeEach((done) => {
+      request(app)
+        .post('/api/v1/auth/signup')
+        .send({
+          "email": "sadiqadinoyi@gmail.com",
+          "password": "myPassword",
+          "firstName": "Adinoyi",
+          "lastName": "Sadiq"
+        })
+        .end((err, res) => {
+          done();
+        });
+    });
 
   //   it('POST to /api/v1/auth/signin should create a authenticate a user using username and password', done => {
   //     request(app)
@@ -215,5 +215,5 @@ describe('Authentication controller', () => {
   //         done();
   //       });
   //   });
-  // });
+  });
 });

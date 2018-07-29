@@ -123,18 +123,18 @@ describe('Entries controller', () => {
     });
   });
 
-//   describe('GET all the entries', () => {
-//     it('GET to /api/v1/entries should return all the diary entries', done => {
-//       request(app)
-//         .get('/api/v1/entries')
-//         .set('Accept', 'application/json')
-//         .set({ 'authorization': token, Accept: 'application/json' })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(200);
-//           expect(res.body.message).to.equal('All Diary Entries Retrieved Successfully')
-//           done();
-//         });
-//     });
+  describe('GET all the entries', () => {
+    it('GET to /api/v1/entries should return all the diary entries', done => {
+      request(app)
+        .get('/api/v1/entries')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.message).to.equal('All Diary Entries Retrieved Successfully')
+          done();
+        });
+    });
 
 //     it('GET to /api/v1/entries should return an error when the wrong url is used', done => {
 //       request(app)
@@ -157,7 +157,7 @@ describe('Entries controller', () => {
 //           done();
 //         });
 //     });
-//   });
+  });
 
 //   describe('GET a single entry', () => {
 //   	let id;

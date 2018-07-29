@@ -12,6 +12,7 @@ export default {
       db.query(queryString,
         [entry.authorID, entry.title, entry.content, entry.createdAt, entry.updatedAt],
         (err, result) => {
+          console.log(result, err);
           res.status(201).send({
             entry: result.rows[0],
             message: 'Diary Entry Created Successfully',

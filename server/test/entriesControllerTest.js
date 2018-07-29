@@ -47,20 +47,20 @@ describe('Entries controller', () => {
         });
     });
 
-//     it('should return an error when passed insufficient entry data', done => {
-//       request(app)
-//         .post('/api/v1/entries')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .send({
-//           title: 'A Year of Code',
-//           content: ''
-//         })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(400);
-//           expect(res.body.message).to.equal('Please fill the content field');
-//           done();
-//         });
-//     });
+    it('should return an error when passed insufficient entry data', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: ''
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Please fill the content field');
+          done();
+        });
+    });
 
 //     it('should return an error when passed insufficient entry data', done => {
 //       request(app)

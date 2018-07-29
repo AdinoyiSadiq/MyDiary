@@ -159,33 +159,33 @@ describe('Entries controller', () => {
     });
   });
 
-//   describe('GET a single entry', () => {
-//   	let id;
-//   	beforeEach((done) => {
-//   		request(app)
-//         .post('/api/v1/entries')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .send({
-//           title: 'A Year of Code',
-//           content: 'A few weeks ago, I marked a year since I started coding every day'
-//         })
-//         .end((err, res) => {
-//           id = res.body.entry.id;
-//           done();
-//         });
-//   	});
+  describe('GET a single entry', () => {
+  	let id;
+  	beforeEach((done) => {
+  		request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          id = res.body.entry.id;
+          done();
+        });
+  	});
 
-//   	it('GET to /api/v1/entries/:id should return a single diary entry', done => {
-//       request(app)
-//         .get(`/api/v1/entries/${id}`)
-//         .set('Accept', 'application/json')
-//         .set({ 'authorization': token, Accept: 'application/json' })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(200);
-//           expect(res.body.entry.title).to.equal('A Year of Code')
-//           done();
-//         });
-//     });
+  	it('GET to /api/v1/entries/:id should return a single diary entry', done => {
+      request(app)
+        .get(`/api/v1/entries/${id}`)
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.entry.title).to.equal('A Year of Code')
+          done();
+        });
+    });
 
 //     it('GET to /api/v1/entries/:id should return a single diary entry', done => {
 //       request(app)
@@ -219,7 +219,7 @@ describe('Entries controller', () => {
 //           done();
 //         });
 //     });
-//   });
+  });
 
 //   describe('DELETE an entry', () => {
 //   	let id;

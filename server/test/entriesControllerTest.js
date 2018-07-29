@@ -136,27 +136,27 @@ describe('Entries controller', () => {
         });
     });
 
-//     it('GET to /api/v1/entries should return an error when the wrong url is used', done => {
-//       request(app)
-//         .get('/api/v1/entrie')
-//         .set('Accept', 'application/json')
-//         .set({ 'authorization': token, Accept: 'application/json' })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.body.message).to.equal('Invalid request, Route does not exist')
-//           done();
-//         });
-//     });
+    it('GET to /api/v1/entries should return an error when the wrong url is used', done => {
+      request(app)
+        .get('/api/v1/entrie')
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
 
-//     it('GET to /api/v1/entries should return an error message if a token is not provided', done => {
-//       request(app)
-//         .get('/api/v1/entries')
-//         .end((err, res) => {
-//           expect(res.status).to.equal(401);
-//           expect(res.body.message).to.equal('Unauthorized request, please login')
-//           done();
-//         });
-//     });
+    it('GET to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .get('/api/v1/entries')
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login')
+          done();
+        });
+    });
   });
 
 //   describe('GET a single entry', () => {

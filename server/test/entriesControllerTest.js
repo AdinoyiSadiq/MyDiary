@@ -77,51 +77,51 @@ describe('Entries controller', () => {
         });
     });
 
-//     it('should return an error when passed invalid entry data', done => {
-//       request(app)
-//         .post('/api/v1/entries')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .send({
-//           title: 'A Year of Code',
-//           content: 'A few weeks ago, I marked a year since I started coding every day',
-//           invalid: 'Invalid data'
-//         })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(400);
-//           expect(res.body.message).to.equal('Too many fields')
-//           done();
-//         });
-//     });
+    it('should return an error when passed invalid entry data', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day',
+          invalid: 'Invalid data'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.body.message).to.equal('Too many fields')
+          done();
+        });
+    });
 
-//     it('POST to /api/v1/entries should return an error when the wrong url is used', done => {
-//       request(app)
-//         .post('/api/v1/entrie')
-//         .set({ 'authorization': token, 'Accept': 'application/json' })
-//         .send({
-//           title: 'A Year of Code',
-//           content: 'A few weeks ago, I marked a year since I started coding every day'
-//         })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.body.message).to.equal('Invalid request, Route does not exist')
-//           done();
-//         });
-//     });
+    it('POST to /api/v1/entries should return an error when the wrong url is used', done => {
+      request(app)
+        .post('/api/v1/entrie')
+        .set({ 'authorization': token, 'Accept': 'application/json' })
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body.message).to.equal('Invalid request, Route does not exist')
+          done();
+        });
+    });
 
-//     it('POST to /api/v1/entries should return an error message if a token is not provided', done => {
-//       request(app)
-//         .post('/api/v1/entries')
-//         .send({
-//           title: 'A Year of Code',
-//           content: 'A few weeks ago, I marked a year since I started coding every day'
-//         })
-//         .end((err, res) => {
-//           expect(res.status).to.equal(401);
-//           expect(res.body.message).to.equal('Unauthorized request, please login');
-//           done();
-//         });
-//     });
-//   });
+    it('POST to /api/v1/entries should return an error message if a token is not provided', done => {
+      request(app)
+        .post('/api/v1/entries')
+        .send({
+          title: 'A Year of Code',
+          content: 'A few weeks ago, I marked a year since I started coding every day'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.body.message).to.equal('Unauthorized request, please login');
+          done();
+        });
+    });
+  });
 
 //   describe('GET all the entries', () => {
 //     it('GET to /api/v1/entries should return all the diary entries', done => {
@@ -388,5 +388,5 @@ describe('Entries controller', () => {
 //           done();
 //         });
 //     });
-  });  
+  // });  
 });

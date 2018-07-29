@@ -6,7 +6,7 @@ import resetDB from '../helpers/resetDB';
 let token;
 
 describe('Entries controller', () => {
-  beforeEach((done) => {
+  before((done) => {
   resetDB.resetDB();
   request(app)
     .post('/api/v1/auth/signup')
@@ -23,15 +23,15 @@ describe('Entries controller', () => {
     });
   });
 
-  afterEach((done) => {
+  after((done) => {
     resetDB.resetDB();
 
     done();
   });
 
   describe('Creating an entry', () => {
-    console.log(token);
     it('POST to /api/v1/entries should create a new diary entry', done => {
+      console.log('token:',token);
       request(app)
         .post('/api/v1/entries')
         .set({ 'authorization': token, 'Accept': 'application/json' })

@@ -52,16 +52,16 @@ export default {
         bcrypt.compare(password, resp.rows[0].password, (err, match) => {
           if (err) { return next(err); }
           if (match) {
-            res.send({
+            res.status(200).send({
               message: 'Successfully singed in',
               token: createToken(resp.rows[0].id),
             });
           } else {
-            res.send({ message: 'Invalid email or password' });
+            res.status(400).send({ message: 'Invalid email or password' });
           }
         });
       } else {
-        res.send({ message: 'Invalid email or password' });
+        res.status(400).send({ message: 'Invalid email or password' });
       }
     });
   },

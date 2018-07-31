@@ -60,9 +60,9 @@ window.onload = () => {
     clearError(values);
     const errorMessages = validate(values);
 
-    const len = Object.keys(errorMessages).length;
+    const errorLength = Object.keys(errorMessages).length;
 
-    if (len > 0) {
+    if (errorLength > 0) {
       showError(errorMessages);
     } else {
       window.fetch(url, {

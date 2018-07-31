@@ -52,6 +52,11 @@ button:focus {
   text-align: left;
 }
 
+#authError {
+  color: red;
+  font-size: 0.6rem;
+}
+
 /* Welcome */
 
 #welcomeContent {

@@ -10,7 +10,7 @@ cache:
     - node_modules
 branches:
   only:
-    -  ch-159381385-implement-week1-feedback
+    - develop
 services:
   - postgresql
 env:

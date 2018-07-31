@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Entry</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+	<div id="entryContent">
+		<header class="clearfix">
+			<nav id="mainNav" role="navigation">
+				<ul>
+					<li class="logo">
+						<h3><a class="logoLink" title="MyDiary" href="./entries.html">MyDiary</a></h3>
+					</li>
+					<li>
+						<a title="Entries" href="./entries.html">Entries</a>
+					</li>
+					<li>
+						<a id="profile" title="Profile">Adinoyi</a>
+					</li>
+					<li>
+						<a title="Notifications" href="./notifications.html"><i class="far fa-bell"></i></a>
+					</li>
+					<li>
+						<a title="Add Entry" href="./addEntry.html"><i class="fas fa-plus"></i></a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<ul class="profileModal">
+			<li><a title="View Profile" href="./profile.html">View Profile</a></li>
+			<li><a title="Signout" href="../authentication/signout.html">SignOut</a></li>
+		</ul>
+		
+		<main>
+			<article class="entry">
+				<h3 class="title">Story of my life</h3>
+				<p class="date">Jan 1 2018</p>
+				<p class="content">
+					On the 1st of November 2017, I set out to do something that I’ve always dreamed of doing; become a data scientist.
+
+					Data science is something that I wanted to do even before I knew the term.
+
+					I grew up on Asimov’s stories of mechanical men and was intrigued by the idea of making intelligent things. As I got older, I taught myself the Python programming language, studied engineering and built intelligent physical systems.
+
+					It turns out that the thing that I was truly interested in was the software that ran the systems, the ghost in the machine.
+
+					I have since spent many months learning as much as I could about modern software engineering and now I want to embark on a new and exciting journey.
+				</p>
+				<div class="actions">
+					<a title="Edit" href="#"><i class="far fa-edit"></i></a>
+					<a title="Delete" href="#"><i class="far fa-trash-alt"></i></a>
+				</div>
+			</article>
+		</main>
+	</div>
+
+	<footer>
+		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
+	</footer>
+
+	<script  src="../scripts/nav.js"></script>
+</body>
+</html>

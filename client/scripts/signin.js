@@ -1,4 +1,6 @@
 window.onload = () => {
+  const url = 'http://localhost:3090/api/v1/auth/signin';
+  const authError = document.getElementById('authError');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
 
@@ -45,7 +47,36 @@ window.onload = () => {
 
     clearError(values);
     const errorMessages = validate(values);
-    showError(errorMessages);
+
+    const errorLength = Object.keys(errorMessages).length;
+    if (errorLength > 0) {
+      showError(errorMessages);
+    } else {
+      window.fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+      })
+        .then((response) => {
+          if (response.status === 400) {
+            authError.innerHTML = 'Invalid email or password';
+            return;
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const { token } = data;
+          if (token) {
+            window.localStorage.setItem('token', token);
+            window.location.replace('../main/entries.html');
+          }
+        });
+    }
   }
 
   document.getElementById('signin').addEventListener('click', signin, false);

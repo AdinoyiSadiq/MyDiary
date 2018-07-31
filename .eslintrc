@@ -1,6 +1,11 @@
 {
   "extends": "airbnb-base",
   "rules": {
-  	"consistent-return": "off"
+  	"consistent-return": "off",
+  	"expected-return": "off"
+  },
+  "globals": {
+    "document": true,
+    "window": true
   }
 }

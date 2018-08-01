@@ -51,7 +51,7 @@ window.onload = () => {
             listString += `
                 <article class="entry" entryid=${entry.id}>
                   <div class="content">
-                    <a href="./entry.html">
+                    <a href="./entry.html#${entry.id}">
                       <h3 class="title">${entry.title}</h3>
                       <p class="date">${Date(entry.created).substring(0, 15)}</p>
                       <p>${entry.content}</p>

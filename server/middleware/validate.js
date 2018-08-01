@@ -1,12 +1,12 @@
-const checkFields = data => Object.keys(data).filter(field => !data[field]);
+const checkFields = data => Object.keys(data).filter(field => (!data[field] || !/\S/.test(data[field])));
 
 export default {
   entryPost(req, res, next) {
     const { title, content } = req.body;
-    const len = Object.keys(req.body).length;
+    const fieldLength = Object.keys(req.body).length;
     const missing = checkFields({ title, content });
 
-    if (title || content) {
+    if (missing.length > 0) {
       if (missing.length === 1) {
         return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
       }
@@ -14,7 +14,7 @@ export default {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 
-    if (len > 2) {
+    if (fieldLength > 2) {
       return res.status(400).send({ message: 'Too many fields' });
     }
 
@@ -22,10 +22,10 @@ export default {
   },
   entryUpdate(req, res, next) {
     const { title, content } = req.body;
-    const len = Object.keys(req.body).length;
+    const fieldLength = Object.keys(req.body).length;
     const missing = checkFields({ title, content });
 
-    if (title || content) {
+    if (missing.length > 0) {
       if (missing.length === 1) {
         return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
       }
@@ -33,7 +33,7 @@ export default {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 
-    if (len > 2) {
+    if (fieldLength > 2) {
       return res.status(400).send({ message: 'Too many fields' });
     }
 
@@ -47,7 +47,7 @@ export default {
       password,
     } = req.body;
 
-    const len = Object.keys(req.body).length;
+    const fieldLength = Object.keys(req.body).length;
     const missing = checkFields({
       firstName,
       lastName,
@@ -67,10 +67,18 @@ export default {
       }
     });
 
-    if (!firstName || !lastName || !email || !password) {
+    if (missing.length > 0) {
       return res.status(400).send({ message: errorString });
     }
-    if (len > 4) {
+
+    if (!email.match(/[A-z0-9.]+@[A-z]+\.(com|me)/)) {
+      return res.status(400).send({ message: 'Please enter a valid email' });
+    }
+
+    if (password.length < 5) {
+      return res.status(400).send({ message: 'Passwords must be greater than four characters' });
+    }
+    if (fieldLength > 4) {
       return res.status(400).send({ message: 'Too many fields' });
     }
 
@@ -78,10 +86,10 @@ export default {
   },
   signinPost(req, res, next) {
     const { email, password } = req.body;
-    const len = Object.keys(req.body).length;
+    const fieldLength = Object.keys(req.body).length;
     const missing = checkFields({ email, password });
 
-    if (email || password) {
+    if (missing.length > 0) {
       if (missing.length === 1) {
         return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
       }
@@ -89,7 +97,15 @@ export default {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 
-    if (len > 2) {
+    if (!email.match(/[A-z0-9.]+@[A-z]+\.(com|me)/)) {
+      return res.status(400).send({ message: 'Please enter a valid email' });
+    }
+
+    if (password.length < 5) {
+      return res.status(400).send({ message: 'Passwords must be greater than four characters' });
+    }
+
+    if (fieldLength > 2) {
       return res.status(400).send({ message: 'Too many fields' });
     }
 

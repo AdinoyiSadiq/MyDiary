@@ -53,7 +53,7 @@ export default {
           if (err) { return next(err); }
           if (match) {
             res.status(200).send({
-              message: 'Successfully singed in',
+              message: 'Successfully signed in',
               token: createToken(resp.rows[0].id),
             });
           } else {

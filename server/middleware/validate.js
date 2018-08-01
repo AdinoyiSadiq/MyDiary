@@ -10,7 +10,6 @@ export default {
       if (missing.length === 1) {
         return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
       }
-    } else {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 
@@ -29,7 +28,6 @@ export default {
       if (missing.length === 1) {
         return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
       }
-    } else {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 
@@ -93,7 +91,6 @@ export default {
       if (missing.length === 1) {
         return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
       }
-    } else {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 

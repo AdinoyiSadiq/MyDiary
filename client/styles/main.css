@@ -267,6 +267,17 @@ hr {
 
 /* Entries */
 
+.emptyList {
+  width: 65%;
+  margin: 0 auto;
+  margin-top: 15%;
+  padding: 2rem;
+}
+
+.emptyList .title {
+  padding-bottom: 1rem;
+}
+
 .entryList {
   width: 65%;
   margin: 2rem 2rem 2rem 14rem;

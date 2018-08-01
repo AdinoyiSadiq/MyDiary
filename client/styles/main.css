@@ -52,9 +52,14 @@ button:focus {
   text-align: left;
 }
 
-#authError {
+#authError, #createEntryError {
   color: red;
   font-size: 0.6rem;
+}
+
+#createEntryError {
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 /* Welcome */

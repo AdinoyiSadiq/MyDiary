@@ -1,4 +1,10 @@
 window.onload = function() {
+    const url = 'http://localhost:3090/api/v1/entries';
+    const token = window.localStorage.getItem('token');
+
+    const profile = document.querySelector('#profile');
+    const profileModal = document.querySelector('.profileModal');
+
 	let hour;
 	let minute;
 	let am = false;
@@ -11,7 +17,7 @@ window.onload = function() {
 	const profileToggle = document.querySelector('#profileToggle');
 
 	const clockModal = document.querySelector('#clock');
-	const profileModal = document.querySelector('.myProfile');
+	const myProfileModal = document.querySelector('.myProfile');
 
 	const hourClock = document.querySelector('.hourClock');
 	const minuteClock = document.querySelector('.minuteClock');
@@ -21,6 +27,29 @@ window.onload = function() {
 
 	const amElement = document.getElementById('am');
 	const pmElement = document.getElementById('pm');
+
+	function checkAuth() {
+      window.fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 401) {
+            window.location.replace('../authentication/signin.html');
+          }
+        });
+    }
+
+    function showProfileModal() {
+	  if (profileModal.style.display === 'none') {
+	    profileModal.style.display = 'block';
+	  } else {
+	    profileModal.style.display = 'none';
+	  }
+	}
 
 	function setCurrentTime() {
 		let d, h, m;
@@ -112,15 +141,15 @@ window.onload = function() {
 		reminderToggle.classList.add('active');
 
 		profileToggle.classList.remove('active');
-		profileModal.style.display = 'none';
+		myProfileModal.style.display = 'none';
 	}
 
-	function showProfileModal() {
+	function showMyProfileModal() {
 		clockModal.style.display = 'none';
 		reminderToggle.classList.remove('active');
 
 		profileToggle.classList.add('active');
-		profileModal.style.display = 'block';
+		myProfileModal.style.display = 'block';
 	}
 
 
@@ -142,12 +171,15 @@ window.onload = function() {
 	}, false);
 
 	reminderToggle.addEventListener('click', showClockModal, false);
-	profileToggle.addEventListener('click', showProfileModal, false);
+	profileToggle.addEventListener('click', showMyProfileModal, false);
+	profile.addEventListener('click', showProfileModal, false);
 	hourElement.addEventListener('click', showHourClock, false);
 	minuteElement.addEventListener('click', showMinuteClock, false);
 	amElement.addEventListener('click', setTimeAM, false);
 	pmElement.addEventListener('click', setTimePM, false);
 
+	showMyProfileModal();
 	showProfileModal();
 	setCurrentTime();
+	checkAuth();
 }

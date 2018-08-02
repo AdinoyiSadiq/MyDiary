@@ -8,6 +8,21 @@ window.onload = () => {
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
 
+  function checkAuth() {
+    window.fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+        }
+      });
+  }
+
   function showProfileModal() {
     if (profileModal.style.display === 'none') {
       profileModal.style.display = 'block';
@@ -58,6 +73,7 @@ window.onload = () => {
   }
 
   showProfileModal();
+  checkAuth();
   profile.addEventListener('click', showProfileModal, false);
   document.getElementById('save').addEventListener('click', createEntry, false);
   document.getElementById('cancel').addEventListener('click', cancelEntry, false);

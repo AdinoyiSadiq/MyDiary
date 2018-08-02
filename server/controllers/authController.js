@@ -55,11 +55,11 @@ export default {
               token: utility.createToken(resp.rows[0].id),
             });
           } else {
-            res.status(400).send({ message: 'Invalid email or password' });
+            res.status(400).send({ message: 'Incorrect email or password' });
           }
         });
       } else {
-        res.status(400).send({ message: 'Invalid email or password' });
+        res.status(400).send({ message: 'The account with this email does not exist' });
       }
     });
   },

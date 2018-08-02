@@ -1,4 +1,10 @@
 window.onload = function() {
+    const url = 'http://localhost:3090/api/v1/entries';
+    const token = window.localStorage.getItem('token');
+
+    const profile = document.querySelector('#profile');
+    const profileModal = document.querySelector('.profileModal');
+
 	let hour;
 	let minute;
 	let am = false;
@@ -21,6 +27,21 @@ window.onload = function() {
 
 	const amElement = document.getElementById('am');
 	const pmElement = document.getElementById('pm');
+
+	function checkAuth() {
+      window.fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: token,
+        },
+      })
+        .then((response) => {
+          if (response.status === 401) {
+            window.location.replace('../authentication/signin.html');
+          }
+        });
+    }
 
 	function setCurrentTime() {
 		let d, h, m;
@@ -150,4 +171,5 @@ window.onload = function() {
 
 	showProfileModal();
 	setCurrentTime();
+	checkAuth();
 }

@@ -26,6 +26,29 @@ window.onload = () => {
     }
   }
 
+  function deleteEntry(id) {
+    const deleteURL = `${url}/${id}`;
+    window.fetch(deleteURL, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message === 'Deleted Diary Entry Successfully') {
+          window.location.reload();
+        }
+      });
+  }
+
   const entriesList = document.getElementById('list');
   let listString = '';
   function getAllEntries() {
@@ -49,7 +72,7 @@ window.onload = () => {
           showNoEntriesModal(entries);
           entries.map((entry) => {
             listString += `
-                <article class="entry" entryid=${entry.id}>
+                <article class="entry">
                   <div class="content">
                     <a href="./entry.html#${entry.id}">
                       <h3 class="title">${entry.title}</h3>
@@ -58,7 +81,7 @@ window.onload = () => {
                     </a>
                     <div class="actions">
                       <a title="Edit" href="./updateEntry.html#${entry.id}"><i class="far fa-edit"></i></a>
-                      <a title="Delete" href="#"><i class="far fa-trash-alt"></i></a>
+                      <a title="Delete"><i class="far fa-trash-alt" id="delete" entryID=${entry.id}></i></a>
                     </div>
                   </div>
                 </article>
@@ -70,6 +93,14 @@ window.onload = () => {
       });
   }
 
+  document.querySelector('.entryList').addEventListener('click', (event) => {
+    const { target } = event;
+    if (target.tagName.toLowerCase() === 'i') {
+      if (target.attributes.id.value === 'delete') {
+        deleteEntry(target.getAttribute('entryID'));
+      }
+    }
+  });
   profile.addEventListener('click', showProfileModal, false);
   getAllEntries();
   showProfileModal();

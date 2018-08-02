@@ -1,25 +1,22 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt-nodejs';
 import dotenv from 'dotenv';
 
 import db from '../db';
 import User from '../models/user';
+import utility from '../helpers/utility';
 
 dotenv.config();
-
-function createToken(userID) {
-  return jwt.sign({ id: userID }, process.env.SECRET, { expiresIn: 86400 });
-}
 
 export default {
   signup(req, res, next) {
     const queryString = 'INSERT INTO users (email, password,  firstname, lastname) VALUES ($1, $2, $3, $4) RETURNING *';
+    const values = utility.trimValues(req.body);
     const {
       email,
       password,
       firstName,
       lastName,
-    } = req.body;
+    } = values;
 
     db.query('SELECT * FROM users WHERE email=$1', [email], (error, response) => {
       if (error) { return next(error); }
@@ -38,14 +35,15 @@ export default {
 
           res.status(201).send({
             message: 'Successfully created a your account',
-            token: createToken(resp.rows[0].id),
+            token: utility.createToken(resp.rows[0].id),
           });
         },
       );
     });
   },
   signin(req, res, next) {
-    const { email, password } = req.body;
+    const values = utility.trimValues(req.body);
+    const { email, password } = values;
     db.query('SELECT * FROM users WHERE email=$1', [email], (error, resp) => {
       if (error) { return next(error); }
       if (resp.rowCount > 0) {
@@ -54,7 +52,7 @@ export default {
           if (match) {
             res.status(200).send({
               message: 'Successfully signed in',
-              token: createToken(resp.rows[0].id),
+              token: utility.createToken(resp.rows[0].id),
             });
           } else {
             res.status(400).send({ message: 'Invalid email or password' });

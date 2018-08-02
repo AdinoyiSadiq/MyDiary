@@ -57,7 +57,7 @@ window.onload = () => {
                       <p>${entry.content}</p>
                     </a>
                     <div class="actions">
-                      <a title="Edit" href="./addEntry.html"><i class="far fa-edit"></i></a>
+                      <a title="Edit" href="./updateEntry.html#${entry.id}"><i class="far fa-edit"></i></a>
                       <a title="Delete" href="#"><i class="far fa-trash-alt"></i></a>
                     </div>
                   </div>

@@ -1,7 +1,8 @@
 window.onload = () => {
-  const url = 'http://localhost:3090/api/v1/entries';
+  const id = window.location.hash.substring(1);
+  const url = `http://localhost:3090/api/v1/entries/${id}`;
   const token = window.localStorage.getItem('token');
-  const createEntryError = document.getElementById('createEntryError');
+  const entryError = document.getElementById('entryError');
   const title = document.getElementById('title');
   const content = document.getElementById('content');
 
@@ -16,7 +17,34 @@ window.onload = () => {
     }
   }
 
-  function createEntry(event) {
+  function getEntry() {
+    window.fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        if (response.status === 404) {
+          window.location.replace('./entries.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.entry) {
+          title.value = data.entry.title;
+          content.value = data.entry.content;
+        }
+      });
+  }
+
+  function updateEntry(event) {
     event.preventDefault();
 
     const values = {
@@ -25,7 +53,7 @@ window.onload = () => {
     };
 
     window.fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         authorization: token,
@@ -37,7 +65,7 @@ window.onload = () => {
     })
       .then((response) => {
         if (response.status === 500) {
-          createEntryError.innerHTML = 'An error occurred while processing this request';
+          entryError.innerHTML = 'An error occurred while processing this request';
           return;
         }
         return (response.json());
@@ -45,22 +73,17 @@ window.onload = () => {
       .then((data) => {
         const { message } = data;
         if (message.startsWith('Please fill')) {
-          createEntryError.innerHTML = message;
-        } else if (message === 'Diary Entry Created Successfully') {
+          entryError.innerHTML = message;
+        } else if (message === 'Edited Diary Entry Successfully') {
           window.location.replace(`./entry.html#${data.entry.id}`);
         }
       });
   }
 
-  function cancelEntry() {
-    title.value = '';
-    content.value = '';
-  }
+  profile.addEventListener('click', showProfileModal, false);
+  document.getElementById('save').addEventListener('click', updateEntry, false);
 
   showProfileModal();
-  profile.addEventListener('click', showProfileModal, false);
-  document.getElementById('save').addEventListener('click', createEntry, false);
-  document.getElementById('cancel').addEventListener('click', cancelEntry, false);
-
+  getEntry();
   profileModal.style.display = 'none';
 };

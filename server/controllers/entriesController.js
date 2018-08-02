@@ -3,6 +3,19 @@ import db from '../db';
 
 import utility from '../helpers/utility';
 
+function restrictUpdate(time) {
+  const timeDiff = Date.now() - time;
+  const dayCreated = Date(time).substring(0, 3);
+  const day = Date(Date.now()).substring(0, 3);
+  if (timeDiff > 86400000) {
+    return false;
+  }
+  if (day !== dayCreated) {
+    return false;
+  }
+  return true;
+}
+
 export default {
   createEntry(req, res, next) {
     try {
@@ -46,13 +59,13 @@ export default {
       const isNumber = !Number.isNaN(entryID);
       if (isNumber) {
         db.query(queryString, [id, entryID], (err, result) => {
-          const len = Object.keys(result.rows).length;
-          if (len === 1) {
+          const resultLength = Object.keys(result.rows).length;
+          if (resultLength === 1) {
             res.send({
               entry: result.rows[0],
               message: 'Diary Entry Retrieved Successfully',
             });
-          } else if (len > 1) {
+          } else if (resultLength > 1) {
             res.status(500).send({ error: 'An error occurred while retrieving the entry' });
           } else {
             res.status(404).send({ message: 'Entry not found' });
@@ -78,15 +91,18 @@ export default {
       const isNumber = !Number.isNaN(entryID);
       if (isNumber) {
         db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
-          const len = Object.keys(result.rows).length;
-          if (len === 1) {
+          const resultLength = Object.keys(result.rows).length;
+          const valid = restrictUpdate(result.rows[0].created);
+          if (resultLength === 1 && valid) {
             db.query(queryString, [title, content, updatedAt, id, entryID], (error, resp) => {
               res.send({
                 entry: resp.rows[0],
                 message: 'Edited Diary Entry Successfully',
               });
             });
-          } else if (len > 1) {
+          } else if (!valid) {
+            res.status(403).send({ message: 'Time has elapsed for updating this entry' });
+          } else if (resultLength > 1) {
             res.status(500).send({ error: 'An error occurred while updating the entry' });
           } else {
             res.status(404).send({ message: 'Entry not found' });
@@ -107,14 +123,14 @@ export default {
       const isNumber = !Number.isNaN(entryID);
       if (isNumber) {
         db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
-          const len = Object.keys(result.rows).length;
-          if (len === 1) {
+          const resultLength = Object.keys(result.rows).length;
+          if (resultLength === 1) {
             db.query(queryString, [entryID, id], () => {
               res.send({
                 message: 'Deleted Diary Entry Successfully',
               });
             });
-          } else if (len > 1) {
+          } else if (resultLength > 1) {
             res.status(500).send({ error: 'An error occurred while updating the entry' });
           } else {
             res.status(404).send({ message: 'Entry not found' });

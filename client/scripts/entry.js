@@ -42,7 +42,7 @@ window.onload = () => {
                 <p class="date">${Date(entry.created).substring(0, 15)}</p>
                 <p class="content">${entry.content}</p>
                 <div class="actions">
-                  <a title="Edit" href="#"><i class="far fa-edit"></i></a>
+                  <a title="Edit" href="./updateEntry.html#${entry.id}"><i class="far fa-edit"></i></a>
                   <a title="Delete" href="#"><i class="far fa-trash-alt"></i></a>
                 </div>
           `;

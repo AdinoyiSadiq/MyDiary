@@ -1,6 +1,7 @@
 import express from 'express';
 import entriesController from '../controllers/entriesController';
 import authController from '../controllers/authController';
+import profileController from '../controllers/profileController';
 import validate from '../middleware/validate';
 import requireAuth from '../middleware/requireAuth';
 
@@ -20,6 +21,8 @@ router.get('/entries/:id', requireAuth.auth, entriesController.getEntry);
 router.put('/entries/:id', requireAuth.auth, validate.entryUpdate, entriesController.editEntry);
 
 router.delete('/entries/:id', requireAuth.auth, entriesController.deleteEntry);
+
+router.get('/profile', requireAuth.auth, profileController.getProfile);
 
 router.all('*', (req, res) => {
   res.status(404).json({

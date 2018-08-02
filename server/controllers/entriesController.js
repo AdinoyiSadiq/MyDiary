@@ -40,22 +40,27 @@ export default {
   getEntry(req, res, next) {
     try {
       const queryString = 'SELECT * FROM entries WHERE user_id=$1 AND id=$2';
-      const entryID = parseInt(req.params.id, 10);
       const id = req.userID;
+      const entryID = parseInt(req.params.id, 10);
 
-      db.query(queryString, [id, entryID], (err, result) => {
-        const len = Object.keys(result.rows).length;
-        if (len === 1) {
-          res.send({
-            entry: result.rows[0],
-            message: 'Diary Entry Retrieved Successfully',
-          });
-        } else if (len > 1) {
-          res.status(500).send({ error: 'An error occurred while retrieving the entry' });
-        } else {
-          res.status(404).send({ message: 'Entry not found' });
-        }
-      });
+      const isNumber = !Number.isNaN(entryID);
+      if (isNumber) {
+        db.query(queryString, [id, entryID], (err, result) => {
+          const len = Object.keys(result.rows).length;
+          if (len === 1) {
+            res.send({
+              entry: result.rows[0],
+              message: 'Diary Entry Retrieved Successfully',
+            });
+          } else if (len > 1) {
+            res.status(500).send({ error: 'An error occurred while retrieving the entry' });
+          } else {
+            res.status(404).send({ message: 'Entry not found' });
+          }
+        });
+      } else {
+        res.status(400).send({ error: 'Invalid request, ensure route parameters are correct' });
+      }
     } catch (error) {
       next(error);
     }
@@ -70,21 +75,26 @@ export default {
       const id = req.userID;
       const updatedAt = Date.now();
 
-      db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
-        const len = Object.keys(result.rows).length;
-        if (len === 1) {
-          db.query(queryString, [title, content, updatedAt, id, entryID], (error, resp) => {
-            res.send({
-              entry: resp.rows[0],
-              message: 'Edited Diary Entry Successfully',
+      const isNumber = !Number.isNaN(entryID);
+      if (isNumber) {
+        db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
+          const len = Object.keys(result.rows).length;
+          if (len === 1) {
+            db.query(queryString, [title, content, updatedAt, id, entryID], (error, resp) => {
+              res.send({
+                entry: resp.rows[0],
+                message: 'Edited Diary Entry Successfully',
+              });
             });
-          });
-        } else if (len > 1) {
-          res.status(500).send({ error: 'An error occurred while updating the entry' });
-        } else {
-          res.status(404).send({ message: 'Entry not found' });
-        }
-      });
+          } else if (len > 1) {
+            res.status(500).send({ error: 'An error occurred while updating the entry' });
+          } else {
+            res.status(404).send({ message: 'Entry not found' });
+          }
+        });
+      } else {
+        res.status(400).send({ error: 'Invalid request, ensure route parameters are correct' });
+      }
     } catch (error) {
       next(error);
     }
@@ -94,21 +104,25 @@ export default {
       const queryString = 'DELETE FROM entries WHERE id=$1 AND user_id=$2';
       const entryID = parseInt(req.params.id, 10);
       const id = req.userID;
-
-      db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
-        const len = Object.keys(result.rows).length;
-        if (len === 1) {
-          db.query(queryString, [entryID, id], () => {
-            res.send({
-              message: 'Deleted Diary Entry Successfully',
+      const isNumber = !Number.isNaN(entryID);
+      if (isNumber) {
+        db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
+          const len = Object.keys(result.rows).length;
+          if (len === 1) {
+            db.query(queryString, [entryID, id], () => {
+              res.send({
+                message: 'Deleted Diary Entry Successfully',
+              });
             });
-          });
-        } else if (len > 1) {
-          res.status(500).send({ error: 'An error occurred while updating the entry' });
-        } else {
-          res.status(404).send({ message: 'Entry not found' });
-        }
-      });
+          } else if (len > 1) {
+            res.status(500).send({ error: 'An error occurred while updating the entry' });
+          } else {
+            res.status(404).send({ message: 'Entry not found' });
+          }
+        });
+      } else {
+        res.status(400).send({ error: 'Invalid request, ensure route parameters are correct' });
+      }
     } catch (error) {
       next(error);
     }

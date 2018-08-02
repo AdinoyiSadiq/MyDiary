@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 
 import db from '../db';
 import User from '../models/user';
+import utility from '../helpers/utility';
 
 dotenv.config();
 
@@ -14,12 +15,13 @@ function createToken(userID) {
 export default {
   signup(req, res, next) {
     const queryString = 'INSERT INTO users (email, password,  firstname, lastname) VALUES ($1, $2, $3, $4) RETURNING *';
+    const values = utility.trimValues(req.body);
     const {
       email,
       password,
       firstName,
       lastName,
-    } = req.body;
+    } = values;
 
     db.query('SELECT * FROM users WHERE email=$1', [email], (error, response) => {
       if (error) { return next(error); }
@@ -45,7 +47,8 @@ export default {
     });
   },
   signin(req, res, next) {
-    const { email, password } = req.body;
+    const values = utility.trimValues(req.body);
+    const { email, password } = values;
     db.query('SELECT * FROM users WHERE email=$1', [email], (error, resp) => {
       if (error) { return next(error); }
       if (resp.rowCount > 0) {

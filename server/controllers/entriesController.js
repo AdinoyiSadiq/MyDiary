@@ -1,13 +1,15 @@
 import Entry from '../models/entry';
 import db from '../db';
 
+import utility from '../helpers/utility';
 
 export default {
   createEntry(req, res, next) {
     try {
       const queryString = 'INSERT INTO public.entries(user_id, title, content, created, updated) VALUES ($1, $2, $3, $4, $5) RETURNING *';
       const id = req.userID;
-      const { title, content } = req.body;
+      const values = utility.trimValues(req.body);
+      const { title, content } = values;
       const entry = new Entry(id, title, content);
       db.query(queryString,
         [entry.authorID, entry.title, entry.content, entry.createdAt, entry.updatedAt],
@@ -63,7 +65,8 @@ export default {
       const queryString = 'UPDATE entries SET title=$1, content=$2, updated=$3 WHERE user_id=$4 AND id=$5 RETURNING *';
 
       const entryID = parseInt(req.params.id, 10);
-      const { title, content } = req.body;
+      const values = utility.trimValues(req.body);
+      const { title, content } = values;
       const id = req.userID;
       const updatedAt = Date.now();
 

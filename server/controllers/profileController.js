@@ -17,11 +17,13 @@ export default {
               lastname: user.lastname,
               email: user.email,
             };
-            res.send({
+            res.status(200).send({
               profile,
               message: 'Retrieved User Profile Successfully',
             });
           });
+        } else {
+          res.status(404).send({ message: 'This User Does Not Exist' });
         }
       });
     } catch (error) {

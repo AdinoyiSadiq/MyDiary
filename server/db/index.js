@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const db = new pg.Pool({ connectionString: process.env.DEVELOPMENT });
+const databaseString = process.env.DATABASE_URL || process.env.DEVELOPMENT;
+
+const db = new pg.Pool({ connectionString: databaseString });
 
 const usersQuery = `
 CREATE TABLE public.users (

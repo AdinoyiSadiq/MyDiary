@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt-nodejs';
 import dotenv from 'dotenv';
 
@@ -7,10 +6,6 @@ import User from '../models/user';
 import utility from '../helpers/utility';
 
 dotenv.config();
-
-function createToken(userID) {
-  return jwt.sign({ id: userID }, process.env.SECRET, { expiresIn: 86400 });
-}
 
 export default {
   signup(req, res, next) {
@@ -40,7 +35,7 @@ export default {
 
           res.status(201).send({
             message: 'Successfully created a your account',
-            token: createToken(resp.rows[0].id),
+            token: utility.createToken(resp.rows[0].id),
           });
         },
       );
@@ -57,7 +52,7 @@ export default {
           if (match) {
             res.status(200).send({
               message: 'Successfully signed in',
-              token: createToken(resp.rows[0].id),
+              token: utility.createToken(resp.rows[0].id),
             });
           } else {
             res.status(400).send({ message: 'Invalid email or password' });

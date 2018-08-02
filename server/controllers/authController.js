@@ -34,7 +34,7 @@ export default {
           if (err) { return next(err); }
 
           res.status(201).send({
-            message: 'Successfully created a your account',
+            message: 'Successfully created your account',
             token: utility.createToken(resp.rows[0].id),
           });
         },

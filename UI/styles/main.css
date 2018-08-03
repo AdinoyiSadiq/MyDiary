@@ -108,9 +108,9 @@ button:focus {
 
 /* Auth screens */
 
-.authLogo {
+/*.authLogo {
   font-family: 'Pacifico', cursive !important;
-}
+}*/
 
 #authContent .title {
   font-weight: 900;
@@ -204,7 +204,7 @@ hr {
   font-size: 2rem;
 }
 
-.logo a {
+.logo a, .authLogo {
   font-family: 'Pacifico', cursive;
   text-decoration: none;
   color: #ffc600;

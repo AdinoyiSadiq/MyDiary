@@ -64,7 +64,7 @@ window.onload = () => {
       })
         .then((response) => {
           if (response.status === 400) {
-            authError.innerHTML = 'Invalid email or password';
+            authError.innerHTML = 'Incorrect email or password';
             return;
           }
           return response.json();

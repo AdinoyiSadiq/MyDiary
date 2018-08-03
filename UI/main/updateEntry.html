@@ -2,12 +2,12 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Notifications</title>
+	<title>Add Entry</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
-	<div id="notificationsContent">
+	<div id="addEntryContent">
 		<header class="clearfix">
 			<nav id="mainNav" role="navigation">
 				<ul>
@@ -21,7 +21,7 @@
 						<a id="profile" title="Profile" class="navProfile">Profile</a>
 					</li>
 					<li>
-						<a title="Notifications" href="./notifications.html" class="current"><i class="far fa-bell"></i></a>
+						<a title="Notifications" href="./notifications.html"><i class="far fa-bell"></i></a>
 					</li>
 					<li>
 						<a title="Add Entry" href="./addEntry.html"><i class="fas fa-plus"></i></a>
@@ -34,34 +34,17 @@
 			<li><a title="View Profile" href="./profile.html">View Profile</a></li>
 			<li><a title="Signout" href="../authentication/signout.html">SignOut</a></li>
 		</ul>
-
+		
 		<main>
-			<section class="notificationList">
-				<div class="heading">Notifications</div>
-				<article class="notification">
-					<div class="content">
-						<a href="./addEntry.html">
-							<p class="date">July 4 2018</p>
-							<p>This is a reminder to write an entry by 4:30pm about your experience rock climbing in Rwanda.</p>
-						</a>
-					</div>
-				</article>
-				<article class="notification">
-					<div class="content">
-						<a href="./addEntry.html">
-							<p class="date">June 3 2018</p>
-							<p>This is a reminder to write an entry by 8:00am about the preparing for the Andela bootcamp.</p>
-						</a>
-					</div>
-				</article>
-				<article class="notification">
-					<div class="content">
-						<a href="./addEntry.html">
-							<p class="date">Jan 17 2018</p>
-							<p>This is a reminder to write an entry by 2:00pm on the state of the art in machine learning and what Africa's role would be in it's future.</p>
-						</a>
-					</div>
-				</article>
+			<section>
+				<form>
+					<div class="heading">Update Entry</div>
+					<div id="createEntryError"></div>
+					<input type="text" title="title" placeholder="Title" id="title">
+					<textarea rows="20" cols="50" placeholder="Content" id="content"></textarea>
+					<button id="save">Save</button>
+					<button id="cancel">Cancel</button>
+				</form>
 			</section>
 		</main>
 	</div>
@@ -70,6 +53,7 @@
 		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
 	</footer>
 
-	<script  src="../scripts/notifications.js"></script>
+	<!-- <script  src="../scripts/nav.js"></script> -->
+	<script  src="../scripts/updateEntry.js"></script>
 </body>
 </html>

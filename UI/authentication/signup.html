@@ -11,12 +11,28 @@
 			<div class="title">Create your MyDiary account</div>
 			<hr/>
 			<form>
-				<input type="text" title="name" placeholder="Name">
-				<input type="text" title="surname" placeholder="Surname">
-				<input type="text" title="email" placeholder="Email">
-				<input type="text" title="password" placeholder="Password">
-				<input type="text" title="confirm password" placeholder="Confirm Password">
-				<button formaction="../main/entries.html">Sign Up</button>
+				<div id="authError"></div>
+				<div id="nameField">
+				  <input type="text" id="name" title="name" placeholder="Name">
+				  <div class="error"></div>
+				</div>
+				<div id="surnameField">
+				  <input type="text" id="surname" title="surname" placeholder="Surname">
+				  <div class="error"></div>
+				</div>
+				<div id="emailField">
+				  <input type="text" id="email" title="email" placeholder="Email">
+				  <div class="error"></div>
+				</div>
+				<div id="passwordField">
+				  <input type="password" id="password" title="password" placeholder="Password">
+				  <div class="error"></div>
+				</div>
+				<div id="confirmField">
+				  <input type="password" id="passwordConfirm" title="confirm password" placeholder="Confirm Password">
+				  <div class="error"></div>
+			    </div>
+				<button id="signup">Sign Up</button>
 			</form>
 		</main>
 	</div>
@@ -28,5 +44,7 @@
 	<footer>
 		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
 	</footer>
+
+	<script  src="../scripts/signup.js"></script>
 </body>
 </html>

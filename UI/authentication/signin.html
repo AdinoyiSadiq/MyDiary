@@ -11,9 +11,16 @@
 			<div class="title">Welcome back!</div>
 			<hr/>
 			<form>
-				<input type="text" title="email" placeholder="Email">
-				<input type="text" title="password" placeholder="Password">
-				<button formaction="../main/entries.html">Sign In</button>
+				<div id="authError"></div>
+				<div id="emailField">
+				  <input type="text" id="email" title="email" placeholder="Email">
+				  <div class="error"></div>
+				</div>
+				<div id="passwordField">
+				  <input type="password" id="password" title="password" type="password" placeholder="Password">
+				  <div class="error"></div>
+				</div>
+				<button id="signin">Sign In</button>
 			</form>
 		</main>
 	</div>
@@ -25,5 +32,7 @@
 	<footer>
 		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
 	</footer>
+
+	<script  src="../scripts/signin.js"></script>
 </body>
 </html>

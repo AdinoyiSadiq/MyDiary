@@ -29,6 +29,10 @@ body {
   box-shadow:0 0 5px 5px rgba(0,0,0,0.1);
 }
 
+#delete {
+  cursor: pointer;
+}
+
 button {
   font-family: 'Pacifico', cursive;
   cursor: pointer;
@@ -41,6 +45,25 @@ button:active {
 
 button:focus {
     outline: none;
+}
+
+.error {
+  color: red;
+  font-size: 0.6rem;
+  padding-top: .1rem;
+  padding-bottom: .5rem;
+  padding-left: 2.5rem;
+  text-align: left;
+}
+
+#authError, #entryError {
+  color: red;
+  font-size: 0.6rem;
+}
+
+#entryError {
+  text-align: center;
+  padding-bottom: 1rem;
 }
 
 /* Welcome */
@@ -252,6 +275,17 @@ hr {
 }
 
 /* Entries */
+
+.emptyList {
+  width: 65%;
+  margin: 0 auto;
+  margin-top: 15%;
+  padding: 2rem;
+}
+
+.emptyList .title {
+  padding-bottom: 1rem;
+}
 
 .entryList {
   width: 65%;

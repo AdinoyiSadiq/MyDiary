@@ -1,4 +1,17 @@
 window.onload = function() {
+    const url = 'https://mydiary-server.herokuapp.com/api/v1/entries';
+    const profileUrl = 'https://mydiary-server.herokuapp.com/api/v1/profile';
+    const token = window.localStorage.getItem('token');
+
+    const profile = document.querySelector('#profile');
+    const profileModal = document.querySelector('.profileModal');
+    const navProfile = document.querySelector('.current');
+    const profileFullName = document.querySelector('#fullname'); 
+    const profileFirstName = document.querySelector('#firstname'); 
+    const profileLastName = document.querySelector('#lastname');
+    const profileEmail = document.querySelector('#email');
+    const profileEntryNo = document.querySelector('#entryno');
+
 	let hour;
 	let minute;
 	let am = false;
@@ -11,7 +24,7 @@ window.onload = function() {
 	const profileToggle = document.querySelector('#profileToggle');
 
 	const clockModal = document.querySelector('#clock');
-	const profileModal = document.querySelector('.myProfile');
+	const myProfileModal = document.querySelector('.myProfile');
 
 	const hourClock = document.querySelector('.hourClock');
 	const minuteClock = document.querySelector('.minuteClock');
@@ -21,6 +34,56 @@ window.onload = function() {
 
 	const amElement = document.getElementById('am');
 	const pmElement = document.getElementById('pm');
+
+	// function checkAuth() {
+ //      window.fetch(url, {
+ //        method: 'GET',
+ //        headers: {
+ //          'Content-Type': 'application/json',
+ //          authorization: token,
+ //        },
+ //      })
+ //        .then((response) => {
+ //          if (response.status === 401) {
+ //            window.location.replace('../authentication/signin.html');
+ //          }
+ //        });
+ //    }
+
+ function getProfile() {
+    window.fetch(profileUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message === 'Retrieved User Profile Successfully') {
+          profileFullName.innerHTML = `${data.profile.firstname} ${data.profile.lastname}`
+          navProfile.innerHTML = data.profile.firstname;
+          profileFirstName.innerHTML = data.profile.firstname;
+          profileLastName.innerHTML = data.profile.lastname;
+          profileEmail.innerHTML = data.profile.email;
+          profileEntryNo.innerHTML = data.profile.entryCount;
+        }
+      });
+  }
+
+    function showProfileModal() {
+	  if (profileModal.style.display === 'none') {
+	    profileModal.style.display = 'block';
+	  } else {
+	    profileModal.style.display = 'none';
+	  }
+	}
 
 	function setCurrentTime() {
 		let d, h, m;
@@ -112,15 +175,15 @@ window.onload = function() {
 		reminderToggle.classList.add('active');
 
 		profileToggle.classList.remove('active');
-		profileModal.style.display = 'none';
+		myProfileModal.style.display = 'none';
 	}
 
-	function showProfileModal() {
+	function showMyProfileModal() {
 		clockModal.style.display = 'none';
 		reminderToggle.classList.remove('active');
 
 		profileToggle.classList.add('active');
-		profileModal.style.display = 'block';
+		myProfileModal.style.display = 'block';
 	}
 
 
@@ -142,12 +205,16 @@ window.onload = function() {
 	}, false);
 
 	reminderToggle.addEventListener('click', showClockModal, false);
-	profileToggle.addEventListener('click', showProfileModal, false);
+	profileToggle.addEventListener('click', showMyProfileModal, false);
+	profile.addEventListener('click', showProfileModal, false);
 	hourElement.addEventListener('click', showHourClock, false);
 	minuteElement.addEventListener('click', showMinuteClock, false);
 	amElement.addEventListener('click', setTimeAM, false);
 	pmElement.addEventListener('click', setTimePM, false);
 
+	showMyProfileModal();
 	showProfileModal();
 	setCurrentTime();
+	getProfile();
+	// checkAuth();
 }

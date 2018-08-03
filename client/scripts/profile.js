@@ -1,9 +1,16 @@
 window.onload = function() {
     const url = 'http://localhost:3090/api/v1/entries';
+    const profileUrl = 'http://localhost:3090/api/v1/profile';
     const token = window.localStorage.getItem('token');
 
     const profile = document.querySelector('#profile');
     const profileModal = document.querySelector('.profileModal');
+    const navProfile = document.querySelector('.current');
+    const profileFullName = document.querySelector('#fullname'); 
+    const profileFirstName = document.querySelector('#firstname'); 
+    const profileLastName = document.querySelector('#lastname');
+    const profileEmail = document.querySelector('#email');
+    const profileEntryNo = document.querySelector('#entryno');
 
 	let hour;
 	let minute;
@@ -28,20 +35,47 @@ window.onload = function() {
 	const amElement = document.getElementById('am');
 	const pmElement = document.getElementById('pm');
 
-	function checkAuth() {
-      window.fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: token,
-        },
+	// function checkAuth() {
+ //      window.fetch(url, {
+ //        method: 'GET',
+ //        headers: {
+ //          'Content-Type': 'application/json',
+ //          authorization: token,
+ //        },
+ //      })
+ //        .then((response) => {
+ //          if (response.status === 401) {
+ //            window.location.replace('../authentication/signin.html');
+ //          }
+ //        });
+ //    }
+
+ function getProfile() {
+    window.fetch(profileUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
       })
-        .then((response) => {
-          if (response.status === 401) {
-            window.location.replace('../authentication/signin.html');
-          }
-        });
-    }
+      .then((data) => {
+        if (data.message === 'Retrieved User Profile Successfully') {
+          profileFullName.innerHTML = `${data.profile.firstname} ${data.profile.lastname}`
+          navProfile.innerHTML = data.profile.firstname;
+          profileFirstName.innerHTML = data.profile.firstname;
+          profileLastName.innerHTML = data.profile.lastname;
+          profileEmail.innerHTML = data.profile.email;
+          profileEntryNo.innerHTML = data.profile.entryCount;
+        }
+      });
+  }
 
     function showProfileModal() {
 	  if (profileModal.style.display === 'none') {
@@ -181,5 +215,6 @@ window.onload = function() {
 	showMyProfileModal();
 	showProfileModal();
 	setCurrentTime();
-	checkAuth();
+	getProfile();
+	// checkAuth();
 }

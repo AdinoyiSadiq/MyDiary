@@ -1,9 +1,12 @@
 window.onload = () => {
   const url = 'http://localhost:3090/api/v1/entries';
+  const profileUrl = 'http://localhost:3090/api/v1/profile';
   const token = window.localStorage.getItem('token');
 
   const emptyListModal = document.querySelector('.emptyList');
   const entryListModal = document.querySelector('.entryList');
+  const navProfile = document.querySelector('.navProfile');
+
 
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
@@ -24,6 +27,28 @@ window.onload = () => {
       emptyListModal.style.display = 'none';
       entryListModal.style.display = 'block';
     }
+  }
+
+  function getProfile() {
+    window.fetch(profileUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message === 'Retrieved User Profile Successfully') {
+          navProfile.innerHTML = data.profile.firstname;
+        }
+      });
   }
 
   function deleteEntry(id) {
@@ -104,6 +129,7 @@ window.onload = () => {
   profile.addEventListener('click', showProfileModal, false);
   getAllEntries();
   showProfileModal();
+  getProfile();
 
   profileModal.style.display = 'none';
 };

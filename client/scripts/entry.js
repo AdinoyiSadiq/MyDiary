@@ -1,9 +1,10 @@
 window.onload = () => {
   const id = window.location.hash.substring(1);
   const url = `http://localhost:3090/api/v1/entries/${id}`;
+  const profileUrl = 'http://localhost:3090/api/v1/profile';
   const token = window.localStorage.getItem('token');
   const entryArticle = document.querySelector('.entry');
-
+  const navProfile = document.querySelector('.navProfile');
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
 
@@ -13,6 +14,28 @@ window.onload = () => {
     } else {
       profileModal.style.display = 'none';
     }
+  }
+
+  function getProfile() {
+    window.fetch(profileUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message === 'Retrieved User Profile Successfully') {
+          navProfile.innerHTML = data.profile.firstname;
+        }
+      });
   }
 
   function getEntry() {
@@ -53,6 +76,7 @@ window.onload = () => {
 
   profile.addEventListener('click', showProfileModal, false);
   getEntry();
+  getProfile();
   showProfileModal();
 
   profileModal.style.display = 'none';

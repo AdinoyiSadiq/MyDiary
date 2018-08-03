@@ -1,6 +1,6 @@
 window.onload = () => {
-  const url = 'http://localhost:3090/api/v1/entries';
-  const profileUrl = 'http://localhost:3090/api/v1/profile';
+  const url = 'https://mydiary-server.herokuapp.com/api/v1/entries';
+  const profileUrl = 'https://mydiary-server.herokuapp.com/api/v1/profile';
   const token = window.localStorage.getItem('token');
   const createEntryError = document.getElementById('createEntryError');
   const title = document.getElementById('title');

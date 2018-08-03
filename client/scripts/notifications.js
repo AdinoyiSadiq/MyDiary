@@ -1,5 +1,5 @@
 window.onload = () => {
-  const profileUrl = 'http://localhost:3090/api/v1/profile';
+  const profileUrl = 'https://mydiary-server.herokuapp.com/api/v1/profile';
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
   const navProfile = document.querySelector('.navProfile');

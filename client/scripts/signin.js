@@ -1,5 +1,5 @@
 window.onload = () => {
-  const url = 'http://localhost:3090/api/v1/auth/signin';
+  const url = 'https://mydiary-server.herokuapp.com/api/v1/auth/signin';
   const authError = document.getElementById('authError');
   const email = document.getElementById('email');
   const password = document.getElementById('password');

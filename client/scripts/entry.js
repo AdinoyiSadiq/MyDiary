@@ -1,7 +1,7 @@
 window.onload = () => {
   const id = window.location.hash.substring(1);
-  const url = `http://localhost:3090/api/v1/entries/${id}`;
-  const profileUrl = 'http://localhost:3090/api/v1/profile';
+  const url = `https://mydiary-server.herokuapp.com/api/v1/entries/${id}`;
+  const profileUrl = 'https://mydiary-server.herokuapp.com/api/v1/profile';
   const token = window.localStorage.getItem('token');
   const entryArticle = document.querySelector('.entry');
   const navProfile = document.querySelector('.navProfile');

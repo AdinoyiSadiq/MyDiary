@@ -1,6 +1,7 @@
 window.onload = () => {
   const id = window.location.hash.substring(1);
   const url = `http://localhost:3090/api/v1/entries/${id}`;
+  const profileUrl = 'http://localhost:3090/api/v1/profile';
   const token = window.localStorage.getItem('token');
   const entryError = document.getElementById('entryError');
   const title = document.getElementById('title');
@@ -8,6 +9,7 @@ window.onload = () => {
 
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
+  const navProfile = document.querySelector('.navProfile');
 
   function showProfileModal() {
     if (profileModal.style.display === 'none') {
@@ -15,6 +17,28 @@ window.onload = () => {
     } else {
       profileModal.style.display = 'none';
     }
+  }
+
+  function getProfile() {
+    window.fetch(profileUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message === 'Retrieved User Profile Successfully') {
+          navProfile.innerHTML = data.profile.firstname;
+        }
+      });
   }
 
   function getEntry() {
@@ -85,5 +109,6 @@ window.onload = () => {
 
   showProfileModal();
   getEntry();
+  getProfile();
   profileModal.style.display = 'none';
 };

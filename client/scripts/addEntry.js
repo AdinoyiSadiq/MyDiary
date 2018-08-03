@@ -1,15 +1,32 @@
 window.onload = () => {
   const url = 'http://localhost:3090/api/v1/entries';
+  const profileUrl = 'http://localhost:3090/api/v1/profile';
   const token = window.localStorage.getItem('token');
   const createEntryError = document.getElementById('createEntryError');
   const title = document.getElementById('title');
   const content = document.getElementById('content');
+  const navProfile = document.querySelector('.navProfile');
 
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
 
-  function checkAuth() {
-    window.fetch(url, {
+  // function checkAuth() {
+  //   window.fetch(url, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       authorization: token,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (response.status === 401) {
+  //         window.location.replace('../authentication/signin.html');
+  //       }
+  //     });
+  // }
+
+  function getProfile() {
+    window.fetch(profileUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -19,6 +36,13 @@ window.onload = () => {
       .then((response) => {
         if (response.status === 401) {
           window.location.replace('../authentication/signin.html');
+          return;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message === 'Retrieved User Profile Successfully') {
+          navProfile.innerHTML = data.profile.firstname;
         }
       });
   }
@@ -73,7 +97,8 @@ window.onload = () => {
   }
 
   showProfileModal();
-  checkAuth();
+  // checkAuth();
+  getProfile();
   profile.addEventListener('click', showProfileModal, false);
   document.getElementById('save').addEventListener('click', createEntry, false);
   document.getElementById('cancel').addEventListener('click', cancelEntry, false);

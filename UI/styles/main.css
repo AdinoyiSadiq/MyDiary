@@ -109,7 +109,7 @@ button:focus {
 /* Auth screens */
 
 .authLogo {
-  font-family: 'Pacifico', cursive;
+  font-family: 'Pacifico', cursive !important;
 }
 
 #authContent .title {

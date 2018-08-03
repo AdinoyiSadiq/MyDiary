@@ -5,7 +5,7 @@
 
 MyDiary is an online journal where users can pen down their thoughts and feelings.
 
-## API Endpoint: [https://limitless-brook-47907.herokuapp.com/api/v1/entries](https://limitless-brook-47907.herokuapp.com/api/v1/entries)
+## API Endpoint: [https://mydiary-server.herokuapp.com/api/v1/entries](https://mydiary-server.herokuapp.com/api/v1/entries)
 
 ## Documentation
 Find the API documentation here: [MyDiary API Documentation](https://mydiary2.docs.apiary.io/)
@@ -41,7 +41,9 @@ npm run test
 | POST /entries                                    | Create an entry                    |
 | PUT /entries/:entryId                            | Modify an entry                    |
 | DELETE /entries/:entryId                         | Delete an entry                    |
-
+| POST /auth/signup                                | Create a user                      |
+| POST /auth/signin                                | Sign into an account               |
+| GET /profile                                     | Fetch user profile
 ## MyDiary App UI Template
 The gh-pages branch contains the template UI for the MyDiary app
 

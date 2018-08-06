@@ -94,5 +94,18 @@ window.onload = () => {
     }
   }
 
+  function changeEventHandler(event) {
+     const field = event.currentTarget.getAttribute('id')
+     if (field == 'passwordConfirm') {
+      document.getElementById('confirmField').childNodes[3].innerHTML = '';
+     }
+     document.getElementById(`${field}Field`).childNodes[3].innerHTML = '';
+  }
+
   document.getElementById('signup').addEventListener('click', signup, false);
+  name.onchange=changeEventHandler;
+  surname.onchange=changeEventHandler;
+  email.onchange=changeEventHandler;
+  password.onchange=changeEventHandler;
+  passwordConfirm.onchange=changeEventHandler;
 };

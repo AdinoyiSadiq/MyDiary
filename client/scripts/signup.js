@@ -54,7 +54,7 @@ window.onload = () => {
       surname: surname.value,
       email: email.value,
       password: password.value,
-      confirm: passwordConfirm.value,
+      confirm: confirm.value,
     };
 
     clearError(values);
@@ -94,5 +94,10 @@ window.onload = () => {
     }
   }
 
+  function clearValidationError(event) {
+    document.getElementById(`${event.target.id}Field`).childNodes[3].innerHTML = '';
+  }
+
   document.getElementById('signup').addEventListener('click', signup, false);
+  document.getElementById('signupForm').onchange=clearValidationError;
 };

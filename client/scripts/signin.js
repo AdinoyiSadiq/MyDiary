@@ -79,5 +79,10 @@ window.onload = () => {
     }
   }
 
+  function clearValidationError(event) {
+    document.getElementById(`${event.target.id}Field`).childNodes[3].innerHTML = '';
+  }
+
   document.getElementById('signin').addEventListener('click', signin, false);
+  document.getElementById('signinForm').onchange=clearValidationError;
 };

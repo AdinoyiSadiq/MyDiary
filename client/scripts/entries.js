@@ -10,6 +10,11 @@ window.onload = () => {
 
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
+  const deleteModal = document.querySelector('.deleteModal');
+  const deleteButton = document.querySelector('#deleteButton');
+  const cancelButton = document.querySelector('#cancelButton');
+
+  let id;
 
   function showProfileModal() {
     if (profileModal.style.display === 'none') {
@@ -27,6 +32,14 @@ window.onload = () => {
       emptyListModal.style.display = 'none';
       entryListModal.style.display = 'block';
     }
+  }
+
+  function showDeleteEntryModal() {
+    deleteModal.style.display = 'block';
+  }
+
+  function hideDeleteEntryModal() {
+    deleteModal.style.display = 'none';
   }
 
   function getProfile() {
@@ -51,7 +64,7 @@ window.onload = () => {
       });
   }
 
-  function deleteEntry(id) {
+  function deleteEntry() {
     const deleteURL = `${url}/${id}`;
     window.fetch(deleteURL, {
       method: 'DELETE',
@@ -122,11 +135,14 @@ window.onload = () => {
     const { target } = event;
     if (target.tagName.toLowerCase() === 'i') {
       if (target.attributes.id.value === 'delete') {
-        deleteEntry(target.getAttribute('entryID'));
+        id = target.getAttribute('entryID');
+        showDeleteEntryModal();
       }
     }
   });
   profile.addEventListener('click', showProfileModal, false);
+  deleteButton.addEventListener('click', deleteEntry, false);
+  cancelButton.addEventListener('click', hideDeleteEntryModal, false);
   getAllEntries();
   showProfileModal();
   getProfile();

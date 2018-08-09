@@ -22,7 +22,7 @@ body {
 
 /* Common */
 #welcomeContent, #authContent {
-  width: 450px;
+  width: 40%;
   background: white;
   border-radius: .5em;
   text-align: center;
@@ -735,7 +735,7 @@ hr {
   .profileModal {
     margin-top: 85px;
     padding: .5rem;
-    left: 80%;
+    left: 72%;
     width: 80px;
   }
 
@@ -748,10 +748,14 @@ hr {
   /* Auth */
 
   #welcomeContent, #authContent {
-    width: 306px;
+    width: 80%;
   }
 
   /* Entries */
+
+  #entriesContent .emptyList {
+    width: 60%;
+  }
 
   .entryList {
     width: 90%;
@@ -787,6 +791,10 @@ hr {
 
   .entry .content {
     margin-bottom: 1.2rem;
+  }
+
+  #authContent {
+
   }
 
   /* Add an Entry */

@@ -5,7 +5,7 @@ window.onload = () => {
   const surname = document.getElementById('surname');
   const email = document.getElementById('email');
   const password = document.getElementById('password');
-  const passwordConfirm = document.getElementById('passwordConfirm');
+  const confirm = document.getElementById('confirm');
 
   function clearError(fields) {
     Object.keys(fields).map((field) => {

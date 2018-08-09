@@ -276,20 +276,42 @@ hr {
 
 /* Entries */
 
-.emptyList {
+.emptyList, .deleteModal {
   width: 65%;
   margin: 0 auto;
   margin-top: 15%;
   padding: 2rem;
 }
 
-.emptyList .title {
+.emptyList .title, .deleteModal .title {
   padding-bottom: 1rem;
 }
 
 .entryList {
   width: 65%;
   margin: 2rem 2rem 2rem 14rem;
+}
+
+.deleteModal {
+  position: fixed;
+  z-index: 2;
+  margin-top: 10%;
+  margin-left: 27.5%;
+  display: none;
+}
+
+.deleteModal button {
+  width: 40% !important;
+}
+
+.deleteModal button:nth-of-type(1) {
+  float: left;
+  margin-left: 2.5%;
+}
+
+.deleteModal button:nth-of-type(2) {
+  float: right;
+  margin-right: 2.5%;
 }
 
 .entry {

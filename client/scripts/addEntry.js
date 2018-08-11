@@ -10,21 +10,6 @@ window.onload = () => {
   const profile = document.querySelector('#profile');
   const profileModal = document.querySelector('.profileModal');
 
-  // function checkAuth() {
-  //   window.fetch(url, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       authorization: token,
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (response.status === 401) {
-  //         window.location.replace('../authentication/signin.html');
-  //       }
-  //     });
-  // }
-
   function getProfile() {
     window.fetch(profileUrl, {
       method: 'GET',

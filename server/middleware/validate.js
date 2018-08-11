@@ -69,6 +69,10 @@ export default {
       return res.status(400).send({ message: errorString });
     }
 
+    if ((/[^a-z]/i.test(firstName)) || (/[^a-z]/i.test(lastName))) {
+      return res.status(400).send({ message: 'Please enter a valid name' });
+    }
+
     if (!email.match(/[A-z0-9.]+@[A-z]+\.(com|me)/)) {
       return res.status(400).send({ message: 'Please enter a valid email' });
     }

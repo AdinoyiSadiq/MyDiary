@@ -91,10 +91,16 @@ export default {
       const isNumber = !Number.isNaN(entryID);
       if (isNumber) {
         db.query('SELECT * FROM entries WHERE user_id=$1 AND id=$2', [id, entryID], (err, result) => {
+          const oldTitle = result.rows[0].title;
+          const oldContent = result.rows[0].content;
+
+          const newTitle = title ? title : oldTitle;
+          const newContent = content ? content : oldContent;
+
           const resultLength = Object.keys(result.rows).length;
           const valid = restrictUpdate(result.rows[0].created);
           if (resultLength === 1 && valid) {
-            db.query(queryString, [title, content, updatedAt, id, entryID], (error, resp) => {
+            db.query(queryString, [newTitle, newContent, updatedAt, id, entryID], (error, resp) => {
               res.send({
                 entry: resp.rows[0],
                 message: 'Edited Diary Entry Successfully',

@@ -24,10 +24,7 @@ export default {
     const fieldLength = Object.keys(req.body).length;
     const missing = checkFields({ title, content });
 
-    if (missing.length > 0) {
-      if (missing.length === 1) {
-        return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
-      }
+    if (missing.length === 2) {
       return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
     }
 

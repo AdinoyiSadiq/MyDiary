@@ -109,4 +109,31 @@ export default {
 
     next();
   },
+  reminderPost(req, res, next) {
+    const { content, date } = req.body;
+    const fieldLength = Object.keys(req.body).length;
+    const missing = checkFields({ content, date });
+    const currentTime = Date.now();
+
+    if (missing.length > 0) {
+      if (missing.length === 1) {
+        return res.status(400).send({ message: `Please fill the ${missing[0]} field` });
+      }
+      return res.status(400).send({ message: `Please fill the ${missing[0]} and ${missing[1]} fields` });
+    }
+
+    if (isNaN(parseFloat(date)) && !isFinite(date)) {
+      return res.status(400).send({ message: 'Please enter a valid date for reminder' });
+    }
+
+    if (currentTime > date) {
+      return res.status(400).send({ message: 'Please enter a valid date for reminder' });
+    }
+
+    if (fieldLength > 2) {
+      return res.status(400).send({ message: 'Too many fields' });
+    }
+    
+    next();
+  },
 };

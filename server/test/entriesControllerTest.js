@@ -313,19 +313,35 @@ describe('Entries controller', () => {
         });
     });
 
-    it('should return an error when passed insufficient entry data', done => {
+    it('should update an entry with only title field filled', done => {
       request(app)
         .put(`/api/v1/entries/${id}`)
         .set('Accept', 'application/json')
         .set({ 'authorization': token, Accept: 'application/json' })
         .send({
-          title: 'A Year of Code',
+          title: 'Two Years of Code',
           content: ''
         })
         .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('Please fill the content field');
-		  done();
+          expect(res.status).to.equal(200);
+          expect(res.body.entry.title).to.equal('Two Years of Code');
+		      done();
+        });
+    });
+
+    it('should update an entry with only content field filled', done => {
+      request(app)
+        .put(`/api/v1/entries/${id}`)
+        .set('Accept', 'application/json')
+        .set({ 'authorization': token, Accept: 'application/json' })
+        .send({
+          title: '',
+          content: 'So it has been two years now since I became a software developer'
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.entry.content).to.equal('So it has been two years now since I became a software developer');
+          done();
         });
     });
 
@@ -336,11 +352,11 @@ describe('Entries controller', () => {
         .set({ 'authorization': token, Accept: 'application/json' })
         .send({
           title: '',
-          content: 'So it has been two years now since I became a software developer'
+          content: ''
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('Please fill the title field');
+          expect(res.body.message).to.equal('Please fill the title and content fields');
       done();
         });
     });

@@ -2,6 +2,7 @@ import express from 'express';
 import entriesController from '../controllers/entriesController';
 import authController from '../controllers/authController';
 import profileController from '../controllers/profileController';
+import remindersController from '../controllers/remindersController';
 import validate from '../middleware/validate';
 import requireAuth from '../middleware/requireAuth';
 
@@ -23,6 +24,10 @@ router.put('/entries/:id', requireAuth.auth, validate.entryUpdate, entriesContro
 router.delete('/entries/:id', requireAuth.auth, entriesController.deleteEntry);
 
 router.get('/profile', requireAuth.auth, profileController.getProfile);
+
+router.post('/reminders', requireAuth.auth, validate.reminderPost, remindersController.createReminder);
+router.get('/reminders', requireAuth.auth, remindersController.getReminders);
+router.get('/reminder/time', requireAuth.auth, remindersController.getReminderTime);
 
 router.all('*', (req, res) => {
   res.status(404).json({

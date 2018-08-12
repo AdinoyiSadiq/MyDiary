@@ -26,6 +26,17 @@ created bigint NOT NULL,
 updated bigint NOT NULL
 );`;
 
+const remindersQuery = `
+CREATE TABLE public.reminders (
+id SERIAL PRIMARY KEY,
+user_id integer REFERENCES public.users,
+content character varying(255) NOT NULL,
+date bigint NOT NULL,
+created bigint NOT NULL,
+viewed character varying(100) NOT NULL
+);`;
+
+
 db.connect((err, client, done) => {
   client.query(usersQuery, () => {
     done();
@@ -34,6 +45,12 @@ db.connect((err, client, done) => {
 
 db.connect((err, client, done) => {
   client.query(entriesQuery, () => {
+    done();
+  });
+});
+
+db.connect((err, client, done) => {
+  client.query(remindersQuery, () => {
     done();
   });
 });

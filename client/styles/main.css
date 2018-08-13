@@ -56,9 +56,21 @@ button:focus {
   text-align: left;
 }
 
-#authError, #entryError {
+#authError, #entryError, #reminderError {
   color: red;
   font-size: 0.6rem;
+}
+
+#reminderError {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#reminderSuccess {
+  color: green;
+  font-size: 0.6rem;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 #entryError {
@@ -623,6 +635,17 @@ hr {
 
 .profileSection > div {
   padding-bottom: 5%;
+}
+
+.profileSection > input {
+  text-align: center;
+  margin-bottom: 10%;
+  width: 90%;
+}
+
+#profileContent section div.minuteClock, #profileContent section div.hourClock  {
+  margin-bottom: 0rem;
+  margin-top: 1rem;
 }
 
 .profileSection .firstName, .lastName, .email, .entriesNumber {

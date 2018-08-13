@@ -1,54 +1,45 @@
 window.onload = function() {
-    const url = 'http://localhost:3090/api/v1/entries';
-    const profileUrl = 'http://localhost:3090/api/v1/profile';
-    const token = window.localStorage.getItem('token');
+  const url = 'http://localhost:3090/api/v1/entries';
+  const profileUrl = 'http://localhost:3090/api/v1/profile';
+  const reminderUrl = 'http://localhost:3090/api/v1/reminders';
+  const token = window.localStorage.getItem('token');
 
-    const profile = document.querySelector('#profile');
-    const profileModal = document.querySelector('.profileModal');
-    const navProfile = document.querySelector('.current');
-    const profileFullName = document.querySelector('#fullname'); 
-    const profileFirstName = document.querySelector('#firstname'); 
-    const profileLastName = document.querySelector('#lastname');
-    const profileEmail = document.querySelector('#email');
-    const profileEntryNo = document.querySelector('#entryno');
+  const profile = document.querySelector('#profile');
+  const profileModal = document.querySelector('.profileModal');
+  const navProfile = document.querySelector('.current');
+  const profileFullName = document.querySelector('#fullname'); 
+  const profileFirstName = document.querySelector('#firstname'); 
+  const profileLastName = document.querySelector('#lastname');
+  const profileEmail = document.querySelector('#email');
+  const profileEntryNo = document.querySelector('#entryno');
+  const reminderText = document.querySelector('#reminderText');
+  const addReminderButton = document.querySelector('.addReminder');
+  const cancelButton = document.querySelector('.cancelReminder');
+  const reminderError = document.querySelector('#reminderError');
+  const reminderSuccess = document.querySelector('#reminderSuccess');
 
-	let hour;
-	let minute;
-	let am = false;
-	let pm = false;
+  let hour;
+  let minute;
+  let am = false;
+  let pm = false;
 
-	const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	const minutes = [00, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  const hours = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  const minutes = [00, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
-	const reminderToggle = document.querySelector('#reminderToggle');
-	const profileToggle = document.querySelector('#profileToggle');
+  const reminderToggle = document.querySelector('#reminderToggle');
+  const profileToggle = document.querySelector('#profileToggle');
 
-	const clockModal = document.querySelector('#clock');
-	const myProfileModal = document.querySelector('.myProfile');
+  const clockModal = document.querySelector('#clock');
+  const myProfileModal = document.querySelector('.myProfile');
 
-	const hourClock = document.querySelector('.hourClock');
-	const minuteClock = document.querySelector('.minuteClock');
+  const hourClock = document.querySelector('.hourClock');
+  const minuteClock = document.querySelector('.minuteClock');
 
-	const hourElement = document.getElementById('hr');
-	const minuteElement = document.getElementById('min');
+  const hourElement = document.getElementById('hr');
+  const minuteElement = document.getElementById('min');
 
-	const amElement = document.getElementById('am');
-	const pmElement = document.getElementById('pm');
-
-	// function checkAuth() {
- //      window.fetch(url, {
- //        method: 'GET',
- //        headers: {
- //          'Content-Type': 'application/json',
- //          authorization: token,
- //        },
- //      })
- //        .then((response) => {
- //          if (response.status === 401) {
- //            window.location.replace('../authentication/signin.html');
- //          }
- //        });
- //    }
+  const amElement = document.getElementById('am');
+  const pmElement = document.getElementById('pm');
 
  function getProfile() {
     window.fetch(profileUrl, {
@@ -75,6 +66,43 @@ window.onload = function() {
           profileEntryNo.innerHTML = data.profile.entryCount;
         }
       });
+  }
+
+  function setReminder() {
+	const date = new Date();
+	if (hour == 12 && am) {
+      hour = parseInt(hour)
+	} else if (hour == 12 && pm) {
+	  hour = 0
+	} else {
+	  hour = pm ? (hour + 12) : hour;
+	}
+
+	const reminderTime = new Date(date.getFullYear(), date.getMonth(), (date.getDate() + 1), hour, minute);
+	
+    window.fetch(reminderUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: token,
+        },
+        body: JSON.stringify({
+          content: reminderText.value,
+          date: reminderTime.getTime()
+        }),
+      })
+     .then((response) => response.json())
+     .then((data) => {
+     	if (data.message.startsWith('Please fill')) {
+     		reminderSuccess.innerHTML = '';
+     		reminderError.innerHTML = data.message
+     	} else if (data.message === 'Diary Reminder Created Successfully') {
+     		reminderError.innerHTML = '';
+     		reminderText.value = '';
+     		reminderSuccess.innerHTML = data.message;
+            setCurrentTime();
+     	}
+     });
   }
 
     function showProfileModal() {
@@ -121,8 +149,6 @@ window.onload = function() {
 		let v = `rotate(${degrees}, 82, 82)`;
 		document.getElementById(id).setAttribute('transform', v);
 	}
-
-
 
 	function setHour(time) {
 		hour = time;
@@ -211,6 +237,8 @@ window.onload = function() {
 	minuteElement.addEventListener('click', showMinuteClock, false);
 	amElement.addEventListener('click', setTimeAM, false);
 	pmElement.addEventListener('click', setTimePM, false);
+	addReminderButton.addEventListener('click', setReminder, false);
+	cancelButton.addEventListener('click', showMyProfileModal, false);
 
 	showMyProfileModal();
 	showProfileModal();

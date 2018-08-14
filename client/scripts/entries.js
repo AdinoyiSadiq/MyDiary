@@ -1,6 +1,8 @@
 window.onload = () => {
   const url = 'http://localhost:3090/api/v1/entries';
   const profileUrl = 'http://localhost:3090/api/v1/profile';
+  const reminderUrl = 'http://localhost:3090/api/v1/reminders';
+  const getTimeUrl = 'http://localhost:3090/api/v1/reminder/time';
   const token = window.localStorage.getItem('token');
 
   const emptyListModal = document.querySelector('.emptyList');
@@ -13,8 +15,12 @@ window.onload = () => {
   const deleteModal = document.querySelector('.deleteModal');
   const deleteButton = document.querySelector('#deleteButton');
   const cancelButton = document.querySelector('#cancelButton');
+  const notificationBadge = document.querySelector('.badge');
+
+  const entriesList = document.getElementById('list');
 
   let id;
+  let listString = '';
 
   function showProfileModal() {
     if (profileModal.style.display === 'none') {
@@ -87,8 +93,6 @@ window.onload = () => {
       });
   }
 
-  const entriesList = document.getElementById('list');
-  let listString = '';
   function getAllEntries() {
     window.fetch(url, {
       method: 'GET',
@@ -131,6 +135,51 @@ window.onload = () => {
       });
   }
 
+  function createNotification() {
+    notificationBadge.style.display = 'block';
+    notificationBadge.dataset.count = '1';
+  }
+
+  function setTime() {
+    const currentTime = Date.now();
+    const reminderTime = parseInt(localStorage.reminderTime)
+
+    if (currentTime >= reminderTime) {
+      setTimeout(createNotification, 1000)
+    } else {
+      const timeDiff = reminderTime - currentTime;
+      setTimeout(createNotification, timeDiff);
+    }
+  }
+
+  function getReminderTime() {
+    let reminderTime;
+
+    window.fetch(getTimeUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.date) {
+          reminderTime = data.date;
+          localStorage.setItem('reminderTime', reminderTime);
+          setTime();
+        }
+      });  
+  }
+
+  function checkReminders() {
+    if (localStorage.reminderTime) {
+      setTime();
+    } else {
+      getReminderTime();
+    }
+  }
+
   document.querySelector('.entryList').addEventListener('click', (event) => {
     const { target } = event;
     if (target.tagName.toLowerCase() === 'i') {
@@ -146,6 +195,8 @@ window.onload = () => {
   getAllEntries();
   showProfileModal();
   getProfile();
+  checkReminders();
 
   profileModal.style.display = 'none';
+  notificationBadge.style.display = 'none';
 };

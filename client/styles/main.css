@@ -504,8 +504,8 @@ hr {
 
 /* Notifications */
 .notificationList {
-  width: 65%;
-  margin: 2rem 2rem 2rem 14rem;
+  width: 90%;
+  margin: 2rem 2rem 2rem 3rem;
 }
 
 .notificationList .heading {
@@ -514,10 +514,25 @@ hr {
   margin-bottom: 2rem;
 }
 
-
 .notification {
   padding: 1%;
   padding-bottom: 5%;
+  background-color: white;
+  width: 18%;
+  height: 150px;
+  box-shadow:0 0 5px 5px rgba(0,0,0,0.1);
+  float: left;
+  margin-right: 6.5%; 
+  margin-bottom: 5%;
+}
+
+.reminderContent {
+  cursor: pointer;
+  font-size: .8rem;
+}
+
+.notification:nth-child(4n) {
+  margin-right: 0%; 
 }
 
 .notification a {

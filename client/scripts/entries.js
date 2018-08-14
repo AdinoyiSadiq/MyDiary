@@ -137,12 +137,12 @@ window.onload = () => {
 
   function createNotification() {
     notificationBadge.style.display = 'block';
-    notificationBadge.dataset.count = '1';
+    // notificationBadge.dataset.count = '1';
   }
 
   function setTime() {
     const currentTime = Date.now();
-    const reminderTime = parseInt(localStorage.reminderTime)
+    const reminderTime = parseInt(localStorage.reminderTime);
 
     if (currentTime >= reminderTime) {
       setTimeout(createNotification, 1000)
@@ -164,8 +164,8 @@ window.onload = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.date) {
-          reminderTime = data.date;
+        if (data.date.length > 0) {
+          reminderTime = data.date[0].date;
           localStorage.setItem('reminderTime', reminderTime);
           setTime();
         }

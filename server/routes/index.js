@@ -28,6 +28,7 @@ router.get('/profile', requireAuth.auth, profileController.getProfile);
 router.post('/reminders', requireAuth.auth, validate.reminderPost, remindersController.createReminder);
 router.get('/reminders', requireAuth.auth, remindersController.getReminders);
 router.get('/reminder/time', requireAuth.auth, remindersController.getReminderTime);
+router.put('/reminder/:id', requireAuth.auth, remindersController.updateReminder);
 
 router.all('*', (req, res) => {
   res.status(404).json({

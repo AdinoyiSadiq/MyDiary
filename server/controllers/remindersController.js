@@ -43,10 +43,37 @@ export default {
       const time = Date.now();
       db.query(queryString, [id, 'false'], (err, result) => {
         res.send({
-          date: result.rows[0].date,
+          date: result.rows,
           message: 'Reminder Time Retrieved Successfully',
         });
       });
+    } catch (error) {
+      next(error);
+    }
+  },
+  updateReminder(req, res, next) {
+    try {
+      const queryString = 'UPDATE reminders SET viewed=$1 WHERE user_id=$2 AND id=$3 RETURNING *';
+      const reminderID = parseInt(req.params.id, 10);
+      const id = req.userID;
+      const isNumber = !Number.isNaN(reminderID);
+      
+      if (isNumber) {
+        db.query('SELECT * FROM reminders WHERE user_id=$1 AND id=$2', [id, reminderID], (err, result) => {
+          const resultLength = Object.keys(result.rows).length;
+          if (resultLength) {
+            db.query(queryString, ['true', id, reminderID], (error, resp) => {
+              res.send({ message: 'Updated Diary Reminder Successfully' });
+            });
+          } else if (resultLength > 1) {
+            res.status(500).send({ error: 'An error occurred while updating the entry' });
+          } else {
+            res.status(404).send({ message: 'Reminder not found' });
+          }
+        });
+      } else {
+        res.status(400).send({ error: 'Invalid request, ensure route parameters are correct' });
+      }
     } catch (error) {
       next(error);
     }

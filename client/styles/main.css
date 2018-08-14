@@ -227,6 +227,27 @@ hr {
   padding-right: 5%;
 }
 
+#mainNav li:nth-of-type(4) {
+  position: relative;
+}
+
+.badge:after{
+    content:attr(data-count);
+    position: absolute;
+    background: #ffc600;
+    height:1.2rem;
+    top:1.8rem;
+    right:.7rem;
+    width:1.2rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Pacifico', cursive;  
+    font-size: 1rem;
+    line-height: 1.2rem;
+    border-radius: 50%;
+    color: white;
+}
+
 #mainNav li a:not(.logoLink) {
   display: block;
   line-height: 2rem;

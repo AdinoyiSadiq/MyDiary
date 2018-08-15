@@ -132,9 +132,7 @@ export default {
           const resultLength = Object.keys(result.rows).length;
           if (resultLength === 1) {
             db.query(queryString, [entryID, id], () => {
-              res.send({
-                message: 'Deleted Diary Entry Successfully',
-              });
+              res.send({ message: 'Deleted Diary Entry Successfully' });
             });
           } else if (resultLength > 1) {
             res.status(500).send({ error: 'An error occurred while updating the entry' });

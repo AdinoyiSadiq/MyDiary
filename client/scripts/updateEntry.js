@@ -34,12 +34,10 @@ function getEntry() {
 
 function updateEntry(event) {
   event.preventDefault();
-
   const values = {
     title: title.value,
     content: content.value,
   };
-
   window.fetch(url, {
     method: 'PUT',
     headers: {

@@ -5,6 +5,23 @@ const token = window.localStorage.getItem('token');
 
 let listString = '';
 
+function generateReminders(reminders, listString) {
+  reminders.map((reminder) => {
+    const date = new Date(parseInt(reminder.date));
+    listString += `
+      <article class="notification">
+        <div class="content">
+          <p class="date">${date.toString().substring(0, 25)}</p>
+          <p class="reminderContent" reminderID=${reminder.id}>
+            ${reminder.content}
+          </p>
+        </div>
+      </article>
+    `;
+  });
+  return listString;
+}
+
 function getReminders() {
   window.fetch(reminderUrl, {
     method: 'GET',
@@ -17,20 +34,7 @@ function getReminders() {
     .then((data) => {
       if (data.reminders) {
         const { reminders } = data;
-        reminders.map((reminder) => {
-          const date = new Date(parseInt(reminder.date));
-          listString += `
-            <article class="notification">
-              <div class="content">
-                <p class="date">${date.toString().substring(0, 25)}</p>
-                <p class="reminderContent" reminderID=${reminder.id}>
-                  ${reminder.content}
-                </p>
-              </div>
-            </article>
-          `;
-          return listString;
-        });
+        listString = generateReminders(reminders, listString)
         notificationList.innerHTML = listString;
         localStorage.removeItem('reminderTime');
       }

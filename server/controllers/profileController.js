@@ -9,14 +9,10 @@ export default {
       db.query(queryString, [id], (err, result) => {
         const user = result.rows[0];
         if (user) {
+          const { firstname, lastname, email } = user;
           db.query(countEntriesString, [id], (error, resp) => {
             const entryCount = resp.rows[0].count;
-            const profile = {
-              entryCount,
-              firstname: user.firstname,
-              lastname: user.lastname,
-              email: user.email,
-            };
+            const profile = { entryCount, firstname, lastname, email };
             res.status(200).send({
               profile,
               message: 'Retrieved User Profile Successfully',

@@ -6,12 +6,10 @@ const content = document.getElementById('content');
 
 function createEntry(event) {
   event.preventDefault();
-
   const values = {
     title: title.value,
     content: content.value,
   };
-
   window.fetch(url, {
     method: 'POST',
     headers: {

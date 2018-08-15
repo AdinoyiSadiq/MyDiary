@@ -53,6 +53,27 @@ function deleteEntry() {
     });
 }
 
+function generateEntries(entries, listString) {
+  entries.map((entry) => {
+    listString += `
+        <article class="entry">
+          <div class="content">
+            <a href="./entry.html#${entry.id}">
+              <h3 class="title">${entry.title}</h3>
+              <p class="date">${Date(entry.created).substring(0, 15)}</p>
+              <p class="entryContent">${(entry.content).substring(0, 100)}</p>
+            </a>
+            <div class="actions">
+              <a title="Edit" href="./updateEntry.html#${entry.id}"><i class="far fa-edit"></i></a>
+              <a title="Delete"><i class="far fa-trash-alt" id="delete" entryID=${entry.id}></i></a>
+            </div>
+          </div>
+        </article>
+      `;
+  });
+  return listString;
+}
+
 function getAllEntries() {
   window.fetch(url, {
     method: 'GET',
@@ -72,24 +93,7 @@ function getAllEntries() {
       if (data.entries) {
         const { entries } = data;
         showNoEntriesModal(entries);
-        entries.map((entry) => {
-          listString += `
-              <article class="entry">
-                <div class="content">
-                  <a href="./entry.html#${entry.id}">
-                    <h3 class="title">${entry.title}</h3>
-                    <p class="date">${Date(entry.created).substring(0, 15)}</p>
-                    <p class="entryContent">${(entry.content).substring(0, 100)}</p>
-                  </a>
-                  <div class="actions">
-                    <a title="Edit" href="./updateEntry.html#${entry.id}"><i class="far fa-edit"></i></a>
-                    <a title="Delete"><i class="far fa-trash-alt" id="delete" entryID=${entry.id}></i></a>
-                  </div>
-                </div>
-              </article>
-            `;
-          return listString;
-        });
+        listString = generateEntries(entries, listString)
         entriesList.innerHTML = listString;
       }
     });

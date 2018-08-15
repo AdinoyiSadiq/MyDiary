@@ -65,18 +65,21 @@ function getProfile() {
     });
 }
 
-function setReminder() {
-  const date = new Date();
+function setReminderHour() {
   if (hour == 12 && am) {
     hour = parseInt(hour)
   } else if (hour == 12 && pm) {
     hour = 0
   } else {
-    hour = pm ? (hour + 12) : hour;
+    hour = pm ? (parseInt(hour) + 12) : parseInt(hour);
   }
+}
 
+function setReminder() {
+  const date = new Date();
+  setReminderHour();
+  console.log(hour)
   const reminderTime = new Date(date.getFullYear(), date.getMonth(), (date.getDate() + 1), hour, minute);
-
   window.fetch(reminderUrl, {
     method: 'POST',
     headers: {
@@ -92,7 +95,8 @@ function setReminder() {
    .then((data) => {
  	  if (data.message.startsWith('Please fill')) {
  	      reminderSuccess.innerHTML = '';
- 		  reminderError.innerHTML = data.message
+ 		  reminderError.innerHTML = data.message;
+          setCurrentTime();
  	  } else if (data.message === 'Diary Reminder Created Successfully') {
  		  reminderError.innerHTML = '';
  		  reminderText.value = '';

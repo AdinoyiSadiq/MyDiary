@@ -78,9 +78,7 @@ function setReminderHour() {
 function setReminder() {
   const date = new Date();
   setReminderHour();
-  console.log(hour)
   const reminderTime = new Date(date.getFullYear(), date.getMonth(), (date.getDate() + 1), hour, minute);
-  console.log(reminderTime)
   window.fetch(reminderUrl, {
     method: 'POST',
     headers: {

@@ -1,9 +1,20 @@
 const reminderUrl = 'http://localhost:3090/api/v1/reminders';
 const updateReminderUrl = 'http://localhost:3090/api/v1/reminder/';
 const notificationList = document.querySelector('#list');
+const emptyListModal = document.querySelector('.emptyList');
 const token = window.localStorage.getItem('token');
 
 let listString = '';
+
+function showNoEntriesModal(reminders) {
+  if (reminders.length === 0) {
+    emptyListModal.style.display = 'block';
+    notificationList.style.display = 'none';
+  } else {
+    emptyListModal.style.display = 'none';
+    notificationList.style.display = 'block';
+  }
+}
 
 function generateReminders(reminders, listString) {
   reminders.map((reminder) => {
@@ -34,6 +45,7 @@ function getReminders() {
     .then((data) => {
       if (data.reminders) {
         const { reminders } = data;
+        showNoEntriesModal(reminders);
         listString = generateReminders(reminders, listString)
         notificationList.innerHTML = listString;
         localStorage.removeItem('reminderTime');

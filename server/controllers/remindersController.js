@@ -8,9 +8,8 @@ export default {
       const id = req.userID;
       const { content, date } = req.body;
       const reminder = new Reminder(id, content, date);
-      const reminderDate = Date.now() + 86400000;
       db.query(queryString,
-        [reminder.authorID, reminder.content, reminderDate, reminder.viewed, reminder.createdAt],
+        [reminder.authorID, reminder.content, reminder.date, reminder.viewed, reminder.createdAt],
         (err, result) => {
           res.status(201).send({
             reminder: result.rows[0],
@@ -38,7 +37,7 @@ export default {
   },
   getReminderTime(req, res, next) {
     try {
-      const queryString = 'SELECT reminders.date FROM reminders WHERE user_id=$1 AND viewed=$2 AND date=(SELECT MIN(date) FROM reminders)';
+      const queryString = 'SELECT reminders.date FROM reminders WHERE user_id=$1 AND date=(SELECT MIN(date) FROM reminders WHERE viewed=$2)';
       const id = req.userID;
       const time = Date.now();
       db.query(queryString, [id, 'false'], (err, result) => {

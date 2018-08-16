@@ -30,6 +30,7 @@ function getReminderTime() {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
       if (data.date.length > 0) {
         reminderTime = data.date[0].date;
         localStorage.setItem('reminderTime', reminderTime);

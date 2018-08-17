@@ -49,7 +49,7 @@ button:focus {
 
 .error {
   color: red;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   padding-top: .1rem;
   padding-bottom: .5rem;
   padding-left: 2.5rem;
@@ -58,7 +58,7 @@ button:focus {
 
 #authError, #entryError, #reminderError {
   color: red;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 
 #reminderError {
@@ -993,6 +993,10 @@ hr {
 
   #addEntryContent textarea {
     margin-bottom: 1rem;
+  }
+
+  #addEntryContent #cancel {
+    padding-right: 3rem;
   }
 
   /* Notifications */

@@ -56,6 +56,7 @@ function sendRequest(url, values) {
     .then((data) => {
       const { token } = data;
       if (token) {
+        window.localStorage.clear();
         window.localStorage.setItem('token', token);
         window.location.replace('../main/entries.html');
       }

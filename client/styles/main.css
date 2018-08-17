@@ -213,10 +213,14 @@ hr {
   font-size: 2rem;
 }
 
-.logo a {
+.logo a, .authLogo {
   font-family: 'Pacifico', cursive;
   text-decoration: none;
   color: #ffc600;
+}
+
+.authLogo {
+  padding-bottom: 0 !important;
 }
 
 #mainNav li:nth-of-type(2) {

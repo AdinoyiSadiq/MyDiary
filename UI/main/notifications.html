@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Notifications</title>
+	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" href="../styles/main.css">
 </head>
@@ -18,7 +19,7 @@
 						<a title="Entries" href="./entries.html">Entries</a>
 					</li>
 					<li>
-						<a id="profile" title="Profile" class="navProfile">Profile</a>
+						<a id="profile" title="Profile" class="navProfile"></a>
 					</li>
 					<li>
 						<a title="Notifications" href="./notifications.html" class="current"><i class="far fa-bell"></i></a>
@@ -35,41 +36,24 @@
 			<li><a title="Signout" href="../authentication/signout.html">SignOut</a></li>
 		</ul>
 
-		<main>
+		<main class="clearfix">
 			<section class="notificationList">
 				<div class="heading">Notifications</div>
-				<article class="notification">
-					<div class="content">
-						<a href="./addEntry.html">
-							<p class="date">July 4 2018</p>
-							<p>This is a reminder to write an entry by 4:30pm about your experience rock climbing in Rwanda.</p>
-						</a>
-					</div>
-				</article>
-				<article class="notification">
-					<div class="content">
-						<a href="./addEntry.html">
-							<p class="date">June 3 2018</p>
-							<p>This is a reminder to write an entry by 8:00am about the preparing for the Andela bootcamp.</p>
-						</a>
-					</div>
-				</article>
-				<article class="notification">
-					<div class="content">
-						<a href="./addEntry.html">
-							<p class="date">Jan 17 2018</p>
-							<p>This is a reminder to write an entry by 2:00pm on the state of the art in machine learning and what Africa's role would be in it's future.</p>
-						</a>
-					</div>
-				</article>
+				<div id="list"></div>
+			</section>
+			<section id="authContent" class="emptyList">
+				<div class="title">You don't seem to have any pending notifications</div>
+				<hr/>
 			</section>
 		</main>
 	</div>
 
-	<footer>
+	<footer class="clearfix">
 		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
 	</footer>
-
+    
+    <script  src="../scripts/nav.js"></script>
 	<script  src="../scripts/notifications.js"></script>
+	<script  src="../scripts/auth.js"></script>
 </body>
 </html>

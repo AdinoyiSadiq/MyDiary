@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Profile</title>
+	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link rel="stylesheet" href="../styles/main.css">
 </head>
@@ -18,10 +19,13 @@
 						<a title="Entries" href="./entries.html">Entries</a>
 					</li>
 					<li>
-						<a id="profile" title="Profile" class="current">Profile</a>
+						<a id="profile" title="Profile" class="current"></a>
 					</li>
 					<li>
-						<a title="Notifications" href="./notifications.html"><i class="far fa-bell"></i></a>
+						<a title="Notifications" href="./notifications.html">
+							<i data-count="" class="badge"></i>
+							<i class="far fa-bell"></i>
+						</a>
 					</li>
 					<li>
 						<a title="Add Entry" href="./addEntry.html"><i class="fas fa-plus"></i></a>
@@ -101,9 +105,14 @@
 								<text x="44" y="35">55</text>
 							</svg>
 						</div>
+                        
+                        <div id="reminderError"></div>
+                        <div id="reminderSuccess"></div>
+						<input type="text" id="reminderText" title="reminder" placeholder="Leave a note">
 
-						<button>Add</button>
-						<button>Cancel</button>
+
+						<button class="addReminder">Add</button>
+						<button class="cancelReminder">Cancel</button>
 
 					</article>
 				</div>
@@ -115,7 +124,8 @@
 		<p>Made with &#10084 by <a href="https://github.com/AdinoyiSadiq/MyDiary">Adinoyi Sadiq</a> &copy; 2018</p>
 	</footer>
 
-<!-- 	<script  src="../scripts/nav.js"></script> -->
+	<script  src="../scripts/nav.js"></script>
 	<script  src="../scripts/profile.js"></script>
+	<script  src="../scripts/reminder.js"></script>
 </body>
 </html>

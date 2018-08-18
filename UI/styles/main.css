@@ -22,7 +22,7 @@ body {
 
 /* Common */
 #welcomeContent, #authContent {
-  width: 450px;
+  width: 40%;
   background: white;
   border-radius: .5em;
   text-align: center;
@@ -49,16 +49,28 @@ button:focus {
 
 .error {
   color: red;
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   padding-top: .1rem;
   padding-bottom: .5rem;
   padding-left: 2.5rem;
   text-align: left;
 }
 
-#authError, #entryError {
+#authError, #entryError, #reminderError {
   color: red;
+  font-size: 0.8rem;
+}
+
+#reminderError {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#reminderSuccess {
+  color: green;
   font-size: 0.6rem;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 #entryError {
@@ -83,17 +95,17 @@ button:focus {
 
 #welcomeContent img {
   width: 50%;
-    height: auto;
-    margin: 2rem auto;
+  height: auto;
+  margin: 2rem auto;
 }
 
 #welcomeContent button {
-    background:#ffc600;
-    width: 40%;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    border-bottom: 5px solid #F3C010;
-    font-size: 1rem;
+  background:#ffc600;
+  width: 40%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  border-bottom: 5px solid #F3C010;
+  font-size: 1rem;
 }
 
 #welcomeContent button:nth-of-type(1) {
@@ -108,10 +120,6 @@ button:focus {
 
 /* Auth screens */
 
-/*.authLogo {
-  font-family: 'Pacifico', cursive !important;
-}*/
-
 #authContent .title {
   font-weight: 900;
 }
@@ -125,10 +133,10 @@ button:focus {
   width: 90%;
   margin: 1rem auto;
   padding: 1rem 2rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 1rem;
 }
 
 #authContent button {
@@ -165,8 +173,8 @@ hr {
   width: 50%;
   margin: 0 auto;
   border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
 /* Signup */
@@ -189,6 +197,7 @@ hr {
   top: 0;
   width: 100%;
   border-bottom: .5px solid #C2C2C2;
+  z-index: 1;
 }
 
 #mainNav li {
@@ -210,12 +219,37 @@ hr {
   color: #ffc600;
 }
 
+.authLogo {
+  padding-bottom: 0 !important;
+}
+
 #mainNav li:nth-of-type(2) {
   float: left;
 }
 
 #mainNav li:nth-of-type(3) {
   padding-right: 5%;
+}
+
+#mainNav li:nth-of-type(4) {
+  position: relative;
+}
+
+.badge:after{
+    content:attr(data-count);
+    position: absolute;
+    background: #ffc600;
+    height:1.2rem;
+    top:1.8rem;
+    right:.7rem;
+    width:1.2rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Pacifico', cursive;  
+    font-size: 1rem;
+    line-height: 1.2rem;
+    border-radius: 50%;
+    color: white;
 }
 
 #mainNav li a:not(.logoLink) {
@@ -261,6 +295,7 @@ hr {
   border-radius: 4px;
   background: white;
   display: none;
+  z-index: 1;
 }
 
 .profileModal a {
@@ -280,20 +315,42 @@ hr {
 
 /* Entries */
 
-.emptyList {
+.emptyList, .deleteModal {
   width: 65%;
   margin: 0 auto;
   margin-top: 15%;
   padding: 2rem;
 }
 
-.emptyList .title {
+.emptyList .title, .deleteModal .title {
   padding-bottom: 1rem;
 }
 
 .entryList {
-  width: 65%;
-  margin: 2rem 2rem 2rem 14rem;
+  width: 100%;
+  margin: 2rem 2rem 2rem 3rem;
+}
+
+.deleteModal {
+  position: fixed;
+  z-index: 2;
+  margin-top: 10%;
+  margin-left: 27.5%;
+  display: none;
+}
+
+.deleteModal button {
+  width: 40% !important;
+}
+
+.deleteModal button:nth-of-type(1) {
+  float: left;
+  margin-left: 2.5%;
+}
+
+.deleteModal button:nth-of-type(2) {
+  float: right;
+  margin-right: 2.5%;
 }
 
 .entry {
@@ -339,6 +396,41 @@ hr {
 .entry .actions a:nth-of-type(2):hover {
   color: red;
 }
+
+#list .entry {
+  position: relative;
+  background-color: white;
+  width: 18%;
+  height: 220px;
+  box-shadow:0 0 5px 5px rgba(0,0,0,0.1);
+  float: left;
+  margin-right: 3.5%; 
+  margin-bottom: 5%;
+}
+
+#list .entry a .title, #list .entry p {
+  overflow-wrap: break-word;
+}
+
+#list .entry a .title {
+  padding-bottom: .5rem;
+}
+
+#list .entry .actions {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+#list .entry .actions a:nth-of-type(1) {
+  float: left;
+  margin: 0 10px 5px 5px;
+}
+
+#list .entryContent {
+  font-size: .8rem;
+}
+
 
 /* Entry */
 
@@ -416,8 +508,8 @@ hr {
 
 /* Notifications */
 .notificationList {
-  width: 65%;
-  margin: 2rem 2rem 2rem 14rem;
+  width: 90%;
+  margin: 2rem 2rem 2rem 3rem;
 }
 
 .notificationList .heading {
@@ -426,10 +518,26 @@ hr {
   margin-bottom: 2rem;
 }
 
-
 .notification {
   padding: 1%;
   padding-bottom: 5%;
+  background-color: white;
+  width: 18%;
+  height: 150px;
+  box-shadow:0 0 5px 5px rgba(0,0,0,0.1);
+  float: left;
+  margin-right: 6.5%; 
+  margin-bottom: 5%;
+}
+
+.reminderContent {
+  cursor: pointer;
+  font-size: .8rem;
+  overflow-wrap: break-word;
+}
+
+.notification:nth-child(4n) {
+  margin-right: 0%; 
 }
 
 .notification a {
@@ -570,6 +678,17 @@ hr {
   padding-bottom: 5%;
 }
 
+.profileSection > input {
+  text-align: center;
+  margin-bottom: 10%;
+  width: 90%;
+}
+
+#profileContent section div.minuteClock, #profileContent section div.hourClock  {
+  margin-bottom: 0rem;
+  margin-top: 1rem;
+}
+
 .profileSection .firstName, .lastName, .email, .entriesNumber {
   text-align: left !important;
   padding-left: 2rem;
@@ -609,7 +728,14 @@ hr {
 
   #mainNav i {
     padding-bottom: 1rem;
+  }
 
+  .badge {
+   float: left;
+  }
+
+  .badge:after{
+    top:1.8rem;
   }
 
   /* Profile Modal */
@@ -629,8 +755,19 @@ hr {
   /* Entry List*/
 
   .entryList {
-    width: 80%;
-    margin: 2rem 2rem 2rem 6rem;
+    width: 100%;
+    margin: 2rem 2rem 2rem 1rem;
+  }
+
+  #list .entry {
+    width: 25%;
+    height: 200px;
+    margin-right: 5%; 
+  }
+
+  #list .entry a .title {
+    padding-bottom: .5rem;
+    font-size: .9rem;
   }
 
   /* Entry */
@@ -684,12 +821,23 @@ hr {
   /* Notifications */
 
   .notificationList {
-    width: 80%;
-    margin: 2rem 2rem 2rem 5rem;
+    width: 90%;
+    margin: 2rem 2rem 2rem 1rem;
   }
 
-  .notificationList .heading {
-    padding-right: 6rem;
+  .notification {
+    width: 25%;
+    height: 150px;
+    float: left;
+    margin-right: 9.5%; 
+  }
+
+  .notification:nth-child(3n) {
+    margin-right: 0%; 
+  }
+
+  .notification:nth-child(4n) {
+    margin-right: 9.5%; 
   }
 
   /* Profile */
@@ -734,12 +882,22 @@ hr {
   #mainNav li a:not(.logoLink) {
     font-size: 1rem;
   }
+  
+  .badge {
+   float: left;
+  }
+
+  .badge:after{
+    top:1.8rem;
+    width:1rem;
+    height:1rem;
+  }
 
   /* Profile Modal */
   .profileModal {
     margin-top: 85px;
     padding: .5rem;
-    left: 80%;
+    left: 72%;
     width: 80px;
   }
 
@@ -752,10 +910,14 @@ hr {
   /* Auth */
 
   #welcomeContent, #authContent {
-    width: 306px;
+    width: 80%;
   }
 
   /* Entries */
+
+  #entriesContent .emptyList {
+    width: 60%;
+  }
 
   .entryList {
     width: 90%;
@@ -778,6 +940,25 @@ hr {
     margin-right: 1.4rem;
   }
 
+  #list .entry {
+    position: relative;
+    background-color: white;
+    width: 100%;
+    height: 10%;
+    float: none;
+  }
+
+
+  #list .entry a .title {
+    padding-bottom: .5rem;
+    padding: .2rem;
+  }
+
+  #list .date, #list .entryContent {
+    padding-left: .2rem;
+  }
+
+
   /* Entry */
 
   #entryContent .entry {
@@ -791,6 +972,10 @@ hr {
 
   .entry .content {
     margin-bottom: 1.2rem;
+  }
+
+  #authContent {
+
   }
 
   /* Add an Entry */
@@ -814,6 +999,10 @@ hr {
     margin-bottom: 1rem;
   }
 
+  #addEntryContent #cancel {
+    padding-right: 3rem;
+  }
+
   /* Notifications */
 
   .notificationList {
@@ -832,6 +1021,12 @@ hr {
 
   .notification p:nth-of-type(2) {
     font-size: .8rem;
+  }
+
+  .notification {
+    width: 100%;
+    height: 10%;
+    float: none;
   }
 
   /* Profile */
@@ -884,8 +1079,9 @@ footer {
   position: absolute;
   right: 0;
   bottom: 0;
+  width: 100%;
   left: 0;
-  padding: 1rem;
+  padding: 1rem 0;
   font-family: 'Open Sans', sans-serif;
   font-size: .8em;
   text-align: center;

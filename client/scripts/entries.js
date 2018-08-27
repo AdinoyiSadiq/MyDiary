@@ -30,7 +30,8 @@ function hideDeleteEntryModal() {
   deleteModal.style.display = 'none';
 }
 
-function deleteEntry() {
+function deleteEntry(event) {
+  event.preventDefault();
   const deleteURL = `${url}/${id}`;
   window.fetch(deleteURL, {
     method: 'DELETE',

@@ -43,7 +43,12 @@ npm run test
 | DELETE /entries/:entryId                         | Delete an entry                    |
 | POST /auth/signup                                | Create a user                      |
 | POST /auth/signin                                | Sign into an account               |
-| GET /profile                                     | Fetch user profile
+| GET /profile                                     | Fetch user profile                 |
+| GET /reminders                                   | Fetch all reminders                |
+| POST /reminders                                  | Create a reminder                  |
+| GET /reminder/time                               | Get a reminder time                |
+| PUT /reminder/:id                                | Get a single reminder              |
+
 ## MyDiary App UI Template
 The gh-pages branch contains the template UI for the MyDiary app
 

@@ -22,7 +22,7 @@ function generateReminders(reminders, listString) {
     listString += `
       <article class="notification">
         <div class="content">
-          <p class="date">${date.toString().substring(0, 25)}</p>
+          <p class="date">${date.toString().substring(0, 21)}</p>
           <p class="reminderContent" reminderID=${reminder.id}>
             ${reminder.content}
           </p>

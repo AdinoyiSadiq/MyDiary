@@ -56,12 +56,13 @@ function deleteEntry(event) {
 
 function generateEntries(entries, listString) {
   entries.map((entry) => {
+    const date = new Date(parseInt(entry.created));
     listString += `
         <article class="entry">
           <div class="content">
             <a href="./entry.html#${entry.id}">
               <h3 class="title">${entry.title}</h3>
-              <p class="date">${Date(entry.created).substring(0, 15)}</p>
+              <p class="date">${date.toString().substring(0, 15)}</p>
               <p class="entryContent">${(entry.content).substring(0, 100)}</p>
             </a>
             <div class="actions">
